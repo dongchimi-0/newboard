@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>글 수정</title>
+    <meta name="_csrf" th:content="${_csrf.token}">
+    <meta name="_csrf_header" th:content="${_csrf.headerName}">
+</head>
+<body>
+<h1>글 수정</h1>
+<form th:action="@{'/articles/' + ${article.id} + '/edit'}" method="post">
+    <input type="hidden" id="article-id" th:value="${article} != null ? ${article.id} : ''"/>
+    <div>
+        <label>제목
+            <input type="text" id="title" name="title" th:value="${article.title}" required>
+        </label>
+    </div>
+    <div>
+        <label>내용
+            <textarea id="content" name="content" rows="8" required th:text="${article.content}"></textarea>
+        </label>
+    </div>
+    <button type="button" id="modify-btn">저장</button>
+    <a th:href="@{'/articles/' + ${article.id}}">취소</a>
+    <a href="/articles">목록</a>
+</form>
+<script src="/js/article.js" defer></script>
+</body>
+</html>

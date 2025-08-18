@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>로그인</title></head>
+<body>
+<header>
+    <a href="/" class="brand">🌀 임시로고</a>
+</header>
+<main>
+    <h1>로그인</h1>
+    <form method="post" action="/login">
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+        <div><label>이메일 <input type="email" name="username" required></label></div>
+        <div><label>비밀번호 <input type="password" name="password" required></label></div>
+        <button type="submit">로그인</button>
+    </form>
+    <a href="/oauth2/authorization/google" class="btn btn-primary">구글로 로그인</a>
+</main>
+</body>
+</html>

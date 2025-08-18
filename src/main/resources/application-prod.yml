@@ -1,0 +1,22 @@
+spring:
+  h2:
+    console:
+      enabled: false
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://${DB_HOST}:${DB_PORT}/${DB_NAME}}
+    username: ${SPRING_DATASOURCE_USERNAME:${DB_USER}}
+    password: ${SPRING_DATASOURCE_PASSWORD:${DB_PASSWORD}}
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      maximum-pool-size: 10
+      minimum-idle: 2
+      connection-timeout: 30000
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+    properties:
+      hibernate:
+        jdbc:
+          lob:
+            non_contextual_creation: true

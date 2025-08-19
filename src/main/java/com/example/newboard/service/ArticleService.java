@@ -57,4 +57,9 @@ public class ArticleService {
         if (articleRepository.deleteByIdAndAuthor_Email(id, email) == 0)
             throw new AccessDeniedException("본인 글이 아닙니다.");
     }
+
+    public List<Article> findByCategory(String category) {
+        return articleRepository.findByCategory(category);
+    }
+
 }

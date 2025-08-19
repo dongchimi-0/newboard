@@ -6,10 +6,132 @@
     <title th:text="${article.title}">게시글</title>
     <meta name="_csrf" th:content="${_csrf.token}">
     <meta name="_csrf_header" th:content="${_csrf.headerName}">
+    <style>
+        * {
+            font-family: 'Noto Sans KR', sans-serif;
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: #fff;
+            color: #333;
+            min-width: 320px;
+            line-height: 1.6;
+        }
+
+       header {
+            height: 60px;
+            padding: 0 30px;
+            border-bottom: 1px solid #ddd;
+            display: flex;
+            align-items: center;
+            background-color: #fff;
+            margin-bottom: 40px;
+        }
+        header .brand img {
+            height: 50px;
+            object-fit: contain;
+        }
+
+       header div {
+             font-size: 14px;
+        }
+
+       header a {
+            margin-left: 15px;
+            text-decoration: none;
+            color: #333;
+            font-weight: 600;
+       }
+
+        header a:hover {
+            text-decoration: underline;
+        }
+
+
+        main {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        main h1 {
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #222;
+            word-break: break-word;
+        }
+
+       main div[th\\:text] {
+         font-size: 16px;
+         margin-bottom: 40px;
+         white-space: pre-wrap;
+         word-break: break-word;
+       }
+
+        #modify-btn-link,
+        #delete-btn {
+            display: inline-block;
+            padding: 8px 14px;
+            margin-right: 10px;
+            border-radius: 4px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+            user-select: none;
+            background-color: #e6e1e1;  /* 동일 배경색 */
+            color: #333;                 /* 동일 글자색 */
+            border: none;
+            line-height: normal;
+            vertical-align: middle;
+        }
+
+       .btn {
+            display: inline-block;
+            padding: 8px 14px;
+            margin-right: 10px;
+            border-radius: 4px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            text-decoration: none;
+            background-color: #e6e1e1;
+            color: #333;
+            border: none;
+            line-height: normal;
+            vertical-align: middle;
+            user-select: none;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: #d6d2d2;
+        }
+
+
+       p > a {
+         text-decoration: none;
+         color: #3498db;
+         font-weight: 600;
+         font-size: 16px;
+       }
+
+       p > a:hover {
+         text-decoration: underline;
+       }
+
+    </style>
 </head>
+
 <body>
 <header>
-    <a href="/" class="brand">🌀 임시로고</a>
+    <a href="/" class="brand">
+        <img src="/images/logo.jpg" alt="Black Pepper 로고" style="height: 50px; object-fit: contain;"/></a>
     <div>
       <span sec:authorize="isAnonymous()">
         <a href="/login">로그인</a>
@@ -24,18 +146,20 @@
       </span>
     </div>
 </header>
+
 <main>
     <h1 th:text="${article.title}">제목</h1>
     <input type="hidden" id="article-id" th:value="${article.id}">
     <div th:text="${article.content}">내용</div>
 
     <div th:if="${isOwner}">
-        <a th:href="@{'/articles/' + ${article.id} + '/edit'}" id="modify-btn-link">수정</a>
-        <button id="delete-btn">삭제</button>
+        <a th:href="@{'/articles/' + ${article.id} + '/edit'}" class="btn" id="modify-btn-link">수정</a>
+        <button class="btn" id="delete-btn">삭제</button>
     </div>
 
     <p><a href="/articles">목록</a></p>
 </main>
+
 <script src="/js/article.js" defer></script>
 </body>
 </html>

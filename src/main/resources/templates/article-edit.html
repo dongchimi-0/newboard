@@ -6,6 +6,82 @@
     <title>글 수정</title>
     <meta name="_csrf" th:content="${_csrf.token}">
     <meta name="_csrf_header" th:content="${_csrf.headerName}">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: "Helvetica", sans-serif;
+            color: #333;
+            background-color: #fff;
+            line-height: 1.6;
+            min-width: 320px;
+            padding: 20px;
+        }
+
+        h1 {
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 30px;
+            color: #222;
+        }
+
+        form {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #444;
+        }
+
+        input[type="text"],
+        textarea {
+            width: 100%;
+            padding: 10px 12px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+            resize: vertical;
+        }
+
+        button#modify-btn {
+            background-color: #444;
+            color: white;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 4px;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            user-select: none;
+            margin-right: 10px;
+        }
+
+        button#modify-btn:hover {
+            background-color: #222;
+        }
+
+        a {
+            color: #3498db;
+            font-weight: 600;
+            font-size: 16px;
+            text-decoration: none;
+            margin-right: 15px;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
 <body>
 <h1>글 수정</h1>

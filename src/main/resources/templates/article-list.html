@@ -6,10 +6,99 @@
     <title>게시글 목록</title>
     <meta name="_csrf" th:content="${_csrf.token}">
     <meta name="_csrf_header" th:content="${_csrf.headerName}">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: "Helvetica", sans-serif;
+            color: #333;
+            background-color: #fff;
+            line-height: 1.6;
+            min-width: 320px;
+            padding: 20px;
+        }
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 60px;
+            padding: 0 30px;
+            border-bottom: 1px solid #ddd;
+            background-color: #fff;
+            margin-bottom: 40px;
+        }
+        header .brand img {
+            height: 50px;
+            object-fit: contain;
+        }
+        header div {
+            font-size: 14px;
+        }
+        header a {
+            margin-left: 15px;
+            text-decoration: none;
+            color: #333;
+            font-weight: 600;
+        }
+        header a:hover {
+            text-decoration: underline;
+        }
+        h1 {
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 30px;
+            color: #222;
+            text-align: center;
+        }
+        div[sec\\:authorize="isAuthenticated()"] > a {
+            display: inline-block;
+            background-color: #444;
+            color: white;
+            padding: 10px 16px;
+            border-radius: 4px;
+            font-weight: 600;
+            font-size: 16px;
+            text-decoration: none;
+            margin-bottom: 30px;
+            transition: background-color 0.3s ease;
+        }
+        div[sec\\:authorize="isAuthenticated()"] > a:hover {
+            background-color: #222;
+        }
+        ul {
+            max-width: 700px;
+            margin: 0 auto;
+            list-style: none;
+        }
+        ul li {
+            padding: 12px 15px;
+            border-bottom: 1px solid #eee;
+            font-size: 18px;
+        }
+        ul li a {
+            text-decoration: none;
+            color: #3498db;
+            font-weight: 600;
+        }
+        ul li a:hover {
+            text-decoration: underline;
+        }
+        div[th\\:if] {
+            max-width: 700px;
+            margin: 0 auto;
+            font-size: 18px;
+            color: #999;
+            text-align: center;
+            padding: 20px;
+        }
+    </style>
 </head>
 <body>
 <header>
-    <a href="/" class="brand">🌀 임시로고</a>
+    <a href="/" class="brand"> <img src="/images/logo.jpg" alt="Black Pepper 로고" style="height: 50px; object-fit: contain;" /></a>
     <div>
       <span sec:authorize="isAnonymous()">
         <a href="/login">로그인</a>

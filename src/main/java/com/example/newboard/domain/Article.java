@@ -19,6 +19,8 @@ public class Article {
     @Column(columnDefinition = "TEXT", nullable = false)
     private String content;
 
+    private String category;
+
     public void update(String title, String content) {
         this.title = title;
         this.content = content;  // 찾아보세요

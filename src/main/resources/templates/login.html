@@ -3,10 +3,108 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        * {
+            font-family: 'Noto Sans KR', sans-serif;
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            background-color: #fff;
+            color: #333;
+            min-width: 320px;
+            line-height: 1.6;
+        }
+
+        header {
+            height: 60px;
+            padding: 0 30px;
+            border-bottom: 1px solid #ddd;
+            display: flex;
+            align-items: center;
+            background-color: #fff;
+            margin-bottom: 40px;
+        }
+
+        header .brand img {
+            height: 50px;
+            object-fit: contain;
+        }
+        main {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 0 20px;
+            text-align: center;
+        }
+        main h1 {
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 30px;
+            color: #222;
+        }
+        form > div {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+        label {
+            font-weight: 600;
+            font-size: 16px;
+            display: block;
+            margin-bottom: 6px;
+            color: #222;
+        }
+        input[type="email"],
+        input[type="password"] {
+            width: 100%;
+            padding: 8px 12px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            transition: border-color 0.3s ease;
+        }
+        input[type="email"]:focus,
+        input[type="password"]:focus {
+            outline: none;
+            border-color: #3498db;
+            box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
+        }
+        button {
+            background-color: #e6e1e1;
+            color: #808080;
+            border: none;
+            padding: 8px 12px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            border-radius: 4px;
+            vertical-align: middle;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #d6d2d2;
+        }
+        a.btn {
+            background-color: #e6e1e1;
+            color: #808080;
+            border: none;
+            padding: 8px 12px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            border-radius: 4px;
+            vertical-align: middle;
+            transition: background-color 0.3s ease;
+            margin-top: 20px;
+        }
+        a.btn:hover {
+            background-color: #d6d2d2;
+        }
+    </style>
     <title>로그인</title></head>
 <body>
 <header>
-    <a href="/" class="brand">🌀 임시로고</a>
+    <a href="/" class="brand"> <img src="/images/logo.jpg" alt="Black Pepper 로고" style="height: 50px; object-fit: contain;" /></a>
 </header>
 <main>
     <h1>로그인</h1>
@@ -16,7 +114,9 @@
         <div><label>비밀번호 <input type="password" name="password" required></label></div>
         <button type="submit">로그인</button>
     </form>
-    <a href="/oauth2/authorization/google" class="btn btn-primary">구글로 로그인</a>
+    <!-- 구글 로그인 버튼에 margin-top 추가 -->
+    <a href="/oauth2/authorization/google" class="btn btn-primary" style="display: inline-block; margin-top: 15px;">구글로 로그인</a>
 </main>
+
 </body>
 </html>

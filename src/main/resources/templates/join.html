@@ -3,26 +3,148 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>회원가입</title></head>
+    <style>
+        * {
+            font-family: 'Noto Sans KR', sans-serif;
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: #fff;
+            color: #333;
+            min-width: 320px;
+            line-height: 1.6;
+        }
+
+        header {
+            height: 60px;
+            padding: 0 30px;
+            border-bottom: 1px solid #ddd;
+            display: flex;
+            align-items: center;
+            background-color: #fff;
+            margin-bottom: 40px;
+        }
+        header .brand img {
+            height: 50px;
+            object-fit: contain;
+        }
+
+        main {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 20px;
+            text-align: center;
+        }
+        main h1 {
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 30px;
+            color: #222;
+        }
+        a {
+            text-decoration: none;
+            color: #3498db;
+            font-weight: 600;
+            margin: 0 5px;
+            font-size: 16px;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        form {
+            display: inline;
+        }
+
+        span, div[sec\\:authorize] {
+            font-size: 16px;
+            color: #333;
+            vertical-align: middle;
+        }
+
+        .signup-box {
+            border: 1px solid #ccc;
+            padding: 20px 30px;
+            max-width: 400px;
+            margin: 0 auto;
+            border-radius: 8px;
+            background-color: #fff;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            text-align: left;
+        }
+
+        .signup-box div {
+            margin-bottom: 15px;
+        }
+
+        .signup-box input {
+            width: 100%;
+            padding: 6px 8px;
+            box-sizing: border-box;
+            border: 1px solid #bbb;
+            border-radius: 4px;
+            margin-top: 4px;
+        }
+
+        .signup-box button {
+            background-color: #e6e1e1;
+            color: #808080;
+            border: none;
+            padding: 8px 12px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            border-radius: 4px;
+            vertical-align: middle;
+            transition: background-color 0.3s ease;
+        }
+
+        .signup-box button:hover {
+            background-color: #d6d2d2;
+        }
+
+        .google-login {
+            display: inline-block;
+            margin-top: 15px;
+            color: #777;
+            font-weight: normal;
+            text-decoration: none;
+            font-size: 16px;
+        }
+        .google-login:hover {
+            color: #0f0f0f;
+            text-decoration: underline;
+        }
+    </style>
+    <title>회원가입</title>
+</head>
+
 <body>
 <header>
-    <a href="/" class="brand">🌀 임시로고</a>
+    <a href="/" class="brand"> <img src="/images/logo.jpg" alt="Black Pepper 로고" style="height: 50px; object-fit: contain;" /></a>
 </header>
 
 <main>
     <h1>회원가입</h1>
-    <form method="post" action="/join" th:object="${joinRequest}">
-        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
-        <div><label>이메일 <input type="email" th:field="*{email}" required></label></div>
-        <div><label>이름 <input type="text" th:field="*{name}" required></label></div>
-        <div><label>비밀번호 <input type="password" th:field="*{password}" required></label></div>
+    <div class="signup-box">
+        <form method="post" action="/join" th:object="${joinRequest}">
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+            <div><label>이메일 <input type="email" th:field="*{email}" required></label></div>
+            <div><label>이름 <input type="text" th:field="*{name}" required></label></div>
+            <div><label>비밀번호 <input type="password" th:field="*{password}" required></label></div>
 
-        <div th:if="${#fields.hasErrors('*')}" style="color:red" th:errors="*{email}"></div>
-        <div th:if="${error}" style="color:red" th:text="${error}"></div>
+            <div th:if="${#fields.hasErrors('*')}" style="color:red" th:errors="*{email}"></div>
+            <div th:if="${error}" style="color:red" th:text="${error}"></div>
 
-        <button type="submit">가입</button>
-    </form>
-    <a href="/oauth2/authorization/google" class="btn btn-primary">구글로 로그인</a>
+            <button type="submit">가입</button>
+        </form>
+        <a href="/oauth2/authorization/google" class="google-login">구글로 로그인</a>
+    </div>
 </main>
+
 </body>
 </html>

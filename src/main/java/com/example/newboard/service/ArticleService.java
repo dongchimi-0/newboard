@@ -5,12 +5,17 @@ import com.example.newboard.repository.ArticleRepository;
 import com.example.newboard.repository.UserRepository;
 import com.example.newboard.web.dto.ArticleCreateRequest;
 import com.example.newboard.web.dto.ArticleUpdateRequest;
-import jakarta.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
+import com.example.newboard.web.dto.ArticleViewDto;
+import java.time.format.DateTimeFormatter;
+
 
 import java.util.List;
+
+import static java.util.stream.Collectors.toList;
 
 @Service
 @RequiredArgsConstructor
@@ -31,11 +36,12 @@ public class ArticleService {
                 Article.builder()
                         .title(req.getTitle())
                         .content(req.getContent())
+                        .category(req.getCategory())
                         .author(author)
                         .build()
         ).getId();
-    }
 
+    }
 
     public Article findById(Long id) {
         return articleRepository.findById(id)
@@ -47,7 +53,7 @@ public class ArticleService {
         var article = articleRepository.findByIdAndAuthor_Email(id, email)
                 .orElseThrow(() -> new AccessDeniedException("본인 글이 아닙니다."));
 
-        article.update(req.getTitle(), req.getContent());
+        article.update(req.getTitle(), req.getContent(), req.getCategory());
     }
 
 
@@ -61,5 +67,33 @@ public class ArticleService {
     public List<Article> findByCategory(String category) {
         return articleRepository.findByCategory(category);
     }
+
+    @Transactional(readOnly = true)
+    public List<ArticleViewDto> findByCategoryForView(String category) {
+        return articleRepository.findByCategoryWithAuthor(category).stream()
+                .map(article -> new ArticleViewDto(
+                        article.getId(),
+                        article.getTitle(),
+                        article.getCategory(),
+                        article.getAuthor() != null ? article.getAuthor().getEmail() : "익명",
+                        article.getCreatedDate()
+                ))
+                .collect(toList());
+    }
+
+    @Transactional(readOnly = true)
+    public List<ArticleViewDto> findAllForView() {
+        return articleRepository.findAllWithAuthor().stream()
+                .map(article -> new ArticleViewDto(
+                        article.getId(),
+                        article.getTitle(),
+                        article.getCategory(),
+                        article.getAuthor() != null ? article.getAuthor().getEmail() : "익명",
+                        article.getCreatedDate()
+                ))
+                .toList();
+    }
+
+
 
 }

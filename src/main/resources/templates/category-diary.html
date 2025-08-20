@@ -1,11 +1,10 @@
+
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>게시글 목록</title>
-    <meta name="_csrf" th:content="${_csrf.token}">
-    <meta name="_csrf_header" th:content="${_csrf.headerName}">
+    <title>공지 게시글</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}"> <!-- 스타일 공통화 가능하면 CSS 분리 -->
     <link rel="stylesheet" th:href="@{/css/style.css}" />
     <style>
         h1 {
@@ -72,46 +71,27 @@
             padding: 20px;
         }
     </style>
+
 </head>
-<body>
 <div th:replace="header :: header"></div>
+
 <main>
-    <h1>게시글 목록</h1>
-    <!-- 카테고리 선택 필터 -->
-    <form th:action="@{/articles/category-filter}" method="get" style="max-width: 700px; margin: 0 auto 30px auto;">
-        <label for="category-select">카테고리 선택: </label>
-        <select id="category-select" name="category" required onchange="location.href='/articles/category/' + this.value;">
-            <option value="" disabled selected>카테고리를 선택하세요</option>
-            <option value="notice">공지</option>
-            <option value="free">자유</option>
-            <option value="qna">질문</option>
-            <option value="diary">일기</option>
-        </select>
-        <noscript>
-            <button type="submit">필터</button>
-        </noscript>
-    </form>
+    <h1>코딩 일기 게시판</h1>
 
-
-    <!-- 새 글 작성 버튼 (로그인 사용자만 보임) -->
     <div style="text-align: center;" sec:authorize="isAuthenticated()">
         <a href="/articles/new" class="new-article-btn">새글</a>
     </div>
 
-    <!-- 글이 있을 때 -->
     <ul class="article-list" th:unless="${#lists.isEmpty(articles)}">
         <li th:each="a : ${articles}">
             <a th:href="@{'/articles/' + ${a.id}}" th:text="${a.title}">제목</a>
             <div>
                 작성일 : <span th:text="${#temporals.format(a.createdDate, 'yyyy-MM-dd HH:mm')}"></span>
-                </span>
             </div>
         </li>
     </ul>
 
-    <div th:if="${#lists.isEmpty(articles)}">아직 글이 없습니다.</div>
+    <div th:if="${#lists.isEmpty(articles)}">아직 일기 글이 없습니다.</div>
 </main>
-
 </body>
-
 </html>

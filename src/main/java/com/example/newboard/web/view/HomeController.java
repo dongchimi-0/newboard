@@ -47,14 +47,17 @@ public class HomeController {
 
         model.addAttribute("profileImage", randomProfileImage);
 
+
         if (user != null) {
             model.addAttribute("displayName", user.getUsername());
         }
 
-        // 공지사항 게시글 리스트 가져오기 (예: category = "notice")
-        List<Article> noticePosts = articleService.findByCategory("notice");
-        // 자유게시판 게시글 리스트 가져오기 (예: category = "free")
-        List<Article> freePosts = articleService.findByCategory("free");
+        //게시글 목록가져오기
+
+        // 공지사항 게시글 리스트 가져오기
+        List<Article> noticePosts = articleService.findByCategory("공지");
+        // 자유게시판 게시글 리스트 가져오기
+        List<Article> freePosts = articleService.findByCategory("자유");
 
         model.addAttribute("noticePosts", noticePosts);
         model.addAttribute("freePosts", freePosts);

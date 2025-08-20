@@ -6,49 +6,9 @@
     <title>글 수정</title>
     <meta name="_csrf" th:content="${_csrf.token}">
     <meta name="_csrf_header" th:content="${_csrf.headerName}">
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
     <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        body {
-            font-family: "Helvetica", sans-serif;
-            color: #333;
-            background-color: #fff;
-            line-height: 1.6;
-            min-width: 320px;
-            padding: 20px;
-        }
-                header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            height: 60px;
-            padding: 0 30px;
-            border-bottom: 1px solid #ddd;
-            background-color: #fff;
-            margin-bottom: 40px;
-        }
-        header .brand img {
-            height: 50px;
-            object-fit: contain;
-        }
-        header div {
-            font-size: 14px;
-        }
-        header a {
-            margin-left: 15px;
-            text-decoration: none;
-            color: #333;
-            font-weight: 600;
-        }
-        header a:hover {
-            text-decoration: underline;
-        }
-
-        h1 {
+       h1 {
             font-size: 28px;
             font-weight: bold;
             margin-bottom: 30px;
@@ -110,39 +70,40 @@
     </style>
 </head>
 <body>
-<header>
-    <a href="/" class="brand"> <img src="/images/logo.jpg" alt="Black Pepper 로고" style="height: 50px; object-fit: contain;" /></a>
-    <div>
-      <span sec:authorize="isAnonymous()">
-        <a href="/login">로그인</a>
-        <a href="/join">회원가입</a>
-      </span>
-        <span sec:authorize="isAuthenticated()">
-        <span>안녕하세요, <strong th:text="${displayName}"></strong>님!</span>
-        <form method="post" action="/logout" style="display:inline;">
-          <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
-          <button type="submit">로그아웃</button>
-        </form>
-      </span>
-    </div>
-</header>
+<div th:replace="header :: header"></div>
 <h1>글 수정</h1>
 <form th:action="@{'/articles/' + ${article.id} + '/edit'}" method="post">
     <input type="hidden" id="article-id" th:value="${article} != null ? ${article.id} : ''"/>
+
+    <div>
+        <label>카테고리
+            <select id="category" name="category" required>
+                <option value="" disabled>카테고리를 선택하세요</option>
+                <option th:value="'공지'" th:selected="${article.category == '공지'}">공지</option>
+                <option th:value="'자유'" th:selected="${article.category == '자유'}">자유</option>
+                <option th:value="'질문'" th:selected="${article.category == '질문'}">질문</option>
+                <option th:value="'일기'" th:selected="${article.category == '일기'}">일기</option>
+            </select>
+        </label>
+    </div>
+
     <div>
         <label>제목
             <input type="text" id="title" name="title" th:value="${article.title}" required>
         </label>
     </div>
+
     <div>
         <label>내용
             <textarea id="content" name="content" rows="8" required th:text="${article.content}"></textarea>
         </label>
     </div>
+
     <button type="button" id="modify-btn">저장</button>
     <a th:href="@{'/articles/' + ${article.id}}">취소</a>
     <a href="/articles">목록</a>
 </form>
+
 <script src="/js/article.js" defer></script>
 </body>
 </html>

@@ -2,9 +2,14 @@ package com.example.newboard.domain;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import java.time.LocalDateTime;
 
 @Entity @Table(name="users", uniqueConstraints=@UniqueConstraint(columnNames="email"))
 @Getter @NoArgsConstructor @AllArgsConstructor @Builder
+@EntityListeners(AuditingEntityListener.class)
 public class User {
     @Id @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
@@ -31,5 +36,7 @@ public class User {
     public static User create(String email, String name) {
         return new User(email, name);
     }
+    @CreatedDate
+    private LocalDateTime createdDate;
 }
 

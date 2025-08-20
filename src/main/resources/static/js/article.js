@@ -5,13 +5,15 @@ function csrf() {
   return { header, token };
 }
 
+
 //생성
 const createButton = document.getElementById('create-btn');
 if (createButton) {
     createButton.addEventListener('click', async () => {
         const body = {
             title: document.getElementById('title').value,
-            content: document.getElementById('content').value
+            content: document.getElementById('content').value,
+            category: document.getElementById('category').value   // 이 부분 추가
         };
         const { header, token } = csrf();
             const res = await fetch('/api/articles', {
@@ -55,7 +57,8 @@ if (modifyButton) {
         if (!id) return alert('id가 없습니다.');
         const body = {
             title: document.getElementById('title').value,
-            content: document.getElementById('content').value
+            content: document.getElementById('content').value,
+            category: document.getElementById('category').value
         };
         const { header, token } = csrf();
             const res = await fetch(`/api/articles/${id}`, {

@@ -76,7 +76,7 @@ public class ArticleService {
                         article.getTitle(),
                         article.getCategory(),
                         article.getAuthor() != null ? article.getAuthor().getEmail() : "익명",
-                        article.getCreatedDate()
+                        article.getCreatedAt()
                 ))
                 .collect(toList());
     }
@@ -89,7 +89,7 @@ public class ArticleService {
                         article.getTitle(),
                         article.getCategory(),
                         article.getAuthor() != null ? article.getAuthor().getEmail() : "익명",
-                        article.getCreatedDate()
+                        article.getCreatedAt()
                 ))
                 .toList();
     }

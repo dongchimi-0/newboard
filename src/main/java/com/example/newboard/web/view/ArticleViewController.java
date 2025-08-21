@@ -78,6 +78,26 @@ public class ArticleViewController {
         return "category-diary";
     }
 
+//    @GetMapping("/articles/category/{category}")
+//    public String getCategoryPage(@PathVariable String category, Model model) {
+//        // 모든 카테고리 페이지에서 필요한 공통 로직
+//        List<Article> articles = articleService.findByCategory(category);
+//        model.addAttribute("articles", articles);
+//
+//        // 카테고리 값에 따라 다른 HTML 파일 반환
+//        if ("notice".equals(category)) {
+//            return "category-notice";
+//        } else if ("free".equals(category)) {
+//            return "category-free";
+//        } else if ("qna".equals(category)) {
+//            return "category-qna";
+//        } else if ("diary".equals(category)) {
+//            return "category-diary";
+//        } else {
+//            // 존재하지 않는 카테고리일 경우 에러 페이지 또는 기본 페이지로 리다이렉트
+//            return "redirect:/articles";
+//        }
+//    }
 
 
 }

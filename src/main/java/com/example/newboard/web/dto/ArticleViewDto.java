@@ -12,6 +12,6 @@ public class ArticleViewDto {
     private String title;
     private String category;
     private String authorEmail;
-    private LocalDateTime createdDate; // 포맷이 필요하다면 String으로
+    private LocalDateTime createdAt; // 포맷이 필요하다면 String으로
 
 }

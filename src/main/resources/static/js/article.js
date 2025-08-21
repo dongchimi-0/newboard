@@ -10,6 +10,7 @@ function csrf() {
 const createButton = document.getElementById('create-btn');
 if (createButton) {
     createButton.addEventListener('click', async () => {
+        event.preventDefault();
         const body = {
             title: document.getElementById('title').value,
             content: document.getElementById('content').value,
@@ -27,7 +28,14 @@ if (createButton) {
             });
         if(!res.ok) return alert('등록 실패: ' + res.status);
         alert('등록 완료되었습니다.');
-        location.replace('/articles');
+
+        const locationUrl = res.headers.get('Location');
+        if (locationUrl) {
+            location.replace(locationUrl);
+        } else {
+            // fallback: 글 목록 페이지로 이동
+            location.replace('/articles');
+        }
     });
 }
 
@@ -35,6 +43,7 @@ if (createButton) {
 const deleteButton = document.getElementById('delete-btn');
 if (deleteButton) {
     deleteButton.addEventListener('click', async () => {
+        event.preventDefault();
         const id = document.getElementById('article-id')?.value;
         if (!id) return alert('id가 없습니다.');
         const { header, token } = csrf();
@@ -53,6 +62,7 @@ if (deleteButton) {
 const modifyButton = document.getElementById('modify-btn');
 if (modifyButton) {
     modifyButton.addEventListener('click', async () => {
+        event.preventDefault();
         const id = document.getElementById('article-id')?.value;
         if (!id) return alert('id가 없습니다.');
         const body = {

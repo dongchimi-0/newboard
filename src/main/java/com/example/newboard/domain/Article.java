@@ -2,7 +2,6 @@ package com.example.newboard.domain;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.data.annotation.CreatedDate;
 
 import java.time.LocalDateTime;
 
@@ -35,23 +34,32 @@ public class Article {
     @JoinColumn(name = "author_id", nullable = false)
     private User author;  // User 테이블의 id 와 연결되는 외래키 컬럼
 
-    @CreatedDate
-    @Column(updatable = false)
-    private LocalDateTime createdDate;
+//    @CreatedDate
+//    @Column(updatable = false)
+//    private LocalDateTime createdDate;
 
-    public LocalDateTime getCreatedDate() {
-        return createdDate;
-    }
-
-    @PrePersist
-    public void prePersist(){
-        this.createdDate = LocalDateTime.now();
-    }
+//    public LocalDateTime getCreatedDate() {
+//        return createdDate;
+//    }
+//
+//    @PrePersist
+//    public void prePersist(){
+//        this.createdDate = LocalDateTime.now();
+//    }
 
 //    public LocalDateTime getCreatedDate(){
 //        return createdDate;
 //    }
 
+    // ✅ 작성일 추가
+    @Column(nullable = false, updatable = false)
+    private LocalDateTime createdAt;
+
+    // 엔티티가 저장될 때 자동으로 시간 넣기
+    @PrePersist
+    protected void onCreate() {
+        this.createdAt = LocalDateTime.now();
+    }
 
 
 }

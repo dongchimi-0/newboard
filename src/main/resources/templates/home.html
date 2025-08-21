@@ -147,13 +147,14 @@
     </style>
 </head>
 
-<body>
-<header>
-    <a href="/" class="brand"> <img src="/images/logo.jpg" alt="Black Pepper 로고"
-                                    style="height: 50px; object-fit: contain;"/></a>
-</header>
-
+<body class="home-page">
+<div th:replace="header :: header"></div>
 <main>
+    <div class="hot-topic" style="flex: 3;">
+        <h2>Hot </h2>
+
+    </div>
+
     <section style="flex: 3;">
         <h1>최신 게시글</h1>
 

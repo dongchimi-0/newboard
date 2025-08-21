@@ -15,5 +15,6 @@ public class ArticleCreateRequest {
     @NotBlank(message = "내용은 필수입니다.")
     private String content;
 
+    @NotBlank(message =  "카테고리 선택은 필수입니다.")
     private String category;
 }

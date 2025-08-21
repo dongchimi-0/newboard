@@ -87,14 +87,17 @@
 <body>
 <div th:replace="header :: header"></div>
 <main>
-    <h1 th:text="${article.title}">제목</h1>
+    <div class="title">
+        <h1 th:text="${article.title}">제목</h1>
+    </div>
+
     <div style="margin-bottom: 10px; color: #888; font-size: 14px;">
         <span th:text="${article.category}">카테고리명</span>
     </div>
     <input type="hidden" id="article-id" th:value="${article.id}">
     <div th:text="${article.content}">내용</div>
     <div style="margin-bottom: 1rem; color: #666; font-size: 14px;">
-        작성일: <span th:text="${#temporals.format(article.createdDate, 'yyyy-MM-dd HH:mm')}">2025-08-19 10:30</span>
+        작성일: <span th:text="${#temporals.format(article.createdAt, 'yyyy-MM-dd HH:mm')}">2025-08-19 10:30</span>
     </div>
 
     <div th:if="${isOwner}">

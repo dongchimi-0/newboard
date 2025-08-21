@@ -79,6 +79,21 @@
 <main>
     <h1>공지 게시판</h1>
 
+    <!-- 카테고리 선택 필터 -->
+    <form th:action="@{/articles/category-filter}" method="get" style="max-width: 700px; margin: 0 auto 30px auto;">
+        <label for="category-select">카테고리 선택: </label>
+        <select id="category-select" name="category" required onchange="location.href='/articles/category/' + this.value;">
+            <option value="notice">공지</option>
+            
+            <option value="free">자유</option>
+            <option value="qna">질문</option>
+            <option value="diary">일기</option>
+        </select>
+        <noscript>
+            <button type="submit">필터</button>
+        </noscript>
+    </form>
+
     <div style="text-align: center;" sec:authorize="isAuthenticated()">
         <a href="/articles/new" class="new-article-btn">새글</a>
     </div>
@@ -87,7 +102,7 @@
         <li th:each="a : ${articles}">
             <a th:href="@{'/articles/' + ${a.id}}" th:text="${a.title}">제목</a>
             <div>
-                작성일 : <span th:text="${#temporals.format(a.createdDate, 'yyyy-MM-dd HH:mm')}"></span>
+                작성일 : <span th:text="${#temporals.format(a.createdAt, 'yyyy-MM-dd HH:mm')}"></span>
             </div>
         </li>
     </ul>

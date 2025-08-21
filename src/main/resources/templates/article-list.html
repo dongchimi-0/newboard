@@ -103,7 +103,7 @@
         <li th:each="a : ${articles}">
             <a th:href="@{'/articles/' + ${a.id}}" th:text="${a.title}">제목</a>
             <div>
-                작성일 : <span th:text="${#temporals.format(a.createdDate, 'yyyy-MM-dd HH:mm')}"></span>
+                작성일 : <span th:text="${#temporals.format(a.createdAt, 'yyyy-MM-dd HH:mm')}"></span>
                 </span>
             </div>
         </li>

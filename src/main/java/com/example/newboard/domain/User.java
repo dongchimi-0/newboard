@@ -11,19 +11,20 @@ import java.time.LocalDateTime;
 @Getter @NoArgsConstructor @AllArgsConstructor @Builder
 @EntityListeners(AuditingEntityListener.class)
 public class User {
-    @Id @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable=false, length=100)
+    @Column(nullable = false, length = 100)
     private String email;
 
-    @Column(nullable=false, length=60)
+    @Column(nullable = false, length = 60)
     private String password;
 
-    @Column(nullable=false, length=50)
+    @Column(nullable = false, length = 50)
     private String name;
 
-    @Column(nullable=false, length=20)
+    @Column(nullable = false, length = 20)
     private String role;
 
     private User(String email, String name) {
@@ -36,7 +37,7 @@ public class User {
     public static User create(String email, String name) {
         return new User(email, name);
     }
-    @CreatedDate
-    private LocalDateTime createdDate;
+
 }
+
 

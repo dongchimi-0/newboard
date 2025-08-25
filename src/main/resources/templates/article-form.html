@@ -7,90 +7,12 @@
     <meta name="_csrf" th:content="${_csrf.token}">
     <meta name="_csrf_header" th:content="${_csrf.headerName}">
     <link rel="stylesheet" th:href="@{/css/style.css}" />
-    <style>
-        main {
-            display: flex;
-            flex-direction: column; /* 세로 방향 정렬 */
-            justify-content: center; /* 세로 중앙 정렬 */
-            align-items: center; /* 가로 중앙 정렬 */
-            min-height: calc(100vh - 60px - 40px); /* 헤더 높이와 아래 마진 빼기 */
-            padding: 20px;
-            text-align: center; /* 텍스트도 중앙 정렬 */
-        }
-
-        h1 {
-            margin-bottom: 30px;
-            font-size: 28px;
-            font-weight: bold;
-        }
-
-        form {
-            max-width: 600px;
-            width: 100%;
-            text-align: left; /* 폼 내부는 왼쪽 정렬 */
-        }
-
-        body {
-            font-family: "Helvetica", sans-serif;
-            color: #333;
-            background-color: #fff;
-            line-height: 1.6;
-            min-width: 320px;
-            padding: 20px;
-        }
-
-        label {
-            display: block;
-            font-weight: 600;
-            margin-bottom: 8px;
-            color: #444;
-        }
-
-        input[type="text"],
-        textarea {
-            width: 100%;
-            padding: 10px 12px;
-            margin-bottom: 20px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            font-size: 16px;
-            resize: vertical;
-        }
-
-        button#create-btn {
-            background-color: #444;
-            color: white;
-            border: none;
-            padding: 10px 18px;
-            border-radius: 4px;
-            font-weight: 600;
-            font-size: 16px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-            user-select: none;
-            margin-right: 10px;
-        }
-
-        button#create-btn:hover {
-            background-color: #222;
-        }
-
-        a {
-            color: #3498db;
-            font-weight: 600;
-            font-size: 16px;
-            text-decoration: none;
-            margin-right: 15px;
-        }
-
-        a:hover {
-            text-decoration: underline;
-        }
-    </style>
+    <link rel="stylesheet" th:href="@{/css/styleDetail.css}" />
 </head>
-<body>
+
+<body class="form-body">
 <div th:replace="header :: header"></div>
-<main>
+<main class="form-main">
     <h1>새 글 작성</h1>
     <form th:object="${articleCreateRequest}" method="post" action="/articles">
         <input type="hidden" id="article-id" th:value="${article} != null ? ${article.id} : ''"/>
@@ -117,7 +39,8 @@
         <button type="button" id="create-btn">저장</button>
         <a href="/articles">목록</a>
     </form>
-    <script src="/js/article.js" defer></script>
 </main>
+<script src="/js/article.js" defer></script>
+<div th:replace="footer :: footer"></div>
 </body>
 </html>

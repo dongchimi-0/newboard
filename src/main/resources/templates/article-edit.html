@@ -7,103 +7,44 @@
     <meta name="_csrf" th:content="${_csrf.token}">
     <meta name="_csrf_header" th:content="${_csrf.headerName}">
     <link rel="stylesheet" th:href="@{/css/style.css}" />
-    <style>
-       h1 {
-            font-size: 28px;
-            font-weight: bold;
-            margin-bottom: 30px;
-            color: #222;
-        }
-
-        form {
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        label {
-            display: block;
-            font-weight: 600;
-            margin-bottom: 8px;
-            color: #444;
-        }
-
-        input[type="text"],
-        textarea {
-            width: 100%;
-            padding: 10px 12px;
-            margin-bottom: 20px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            font-size: 16px;
-            resize: vertical;
-        }
-
-        button#modify-btn {
-            background-color: #444;
-            color: white;
-            border: none;
-            padding: 10px 18px;
-            border-radius: 4px;
-            font-weight: 600;
-            font-size: 16px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-            user-select: none;
-            margin-right: 10px;
-        }
-
-        button#modify-btn:hover {
-            background-color: #222;
-        }
-
-        a {
-            color: #3498db;
-            font-weight: 600;
-            font-size: 16px;
-            text-decoration: none;
-            margin-right: 15px;
-        }
-
-        a:hover {
-            text-decoration: underline;
-        }
-    </style>
+    <link rel="stylesheet" th:href="@{/css/styleDetail.css}" />
 </head>
 <body>
 <div th:replace="header :: header"></div>
-<h1>글 수정</h1>
-<form th:action="@{'/articles/' + ${article.id} + '/edit'}" method="post">
-    <input type="hidden" id="article-id" th:value="${article} != null ? ${article.id} : ''"/>
+<main class="edit-main"><h1>글 수정</h1>
+    <form th:action="@{'/articles/' + ${article.id} + '/edit'}" method="post">
+        <input type="hidden" id="article-id" th:value="${article} != null ? ${article.id} : ''"/>
 
-    <div>
-        <label>카테고리
-            <select id="category" name="category" required>
-                <option value="" disabled>카테고리를 선택하세요</option>
-                <option th:value="'공지'" th:selected="${article.category == '공지'}">공지</option>
-                <option th:value="'자유'" th:selected="${article.category == '자유'}">자유</option>
-                <option th:value="'질문'" th:selected="${article.category == '질문'}">질문</option>
-                <option th:value="'일기'" th:selected="${article.category == '일기'}">일기</option>
-            </select>
-        </label>
-    </div>
+        <div>
+            <label>카테고리
+                <select id="category" name="category" required>
+                    <option value="" disabled>카테고리를 선택하세요</option>
+                    <option th:value="'공지'" th:selected="${article.category == '공지'}">공지</option>
+                    <option th:value="'자유'" th:selected="${article.category == '자유'}">자유</option>
+                    <option th:value="'질문'" th:selected="${article.category == '질문'}">질문</option>
+                    <option th:value="'일기'" th:selected="${article.category == '일기'}">일기</option>
+                </select>
+            </label>
+        </div>
 
-    <div>
-        <label>제목
-            <input type="text" id="title" name="title" th:value="${article.title}" required>
-        </label>
-    </div>
+        <div>
+            <label>제목
+                <input type="text" id="title" name="title" th:value="${article.title}" required>
+            </label>
+        </div>
 
-    <div>
-        <label>내용
-            <textarea id="content" name="content" rows="8" required th:text="${article.content}"></textarea>
-        </label>
-    </div>
+        <div>
+            <label>내용
+                <textarea id="content" name="content" rows="8" required th:text="${article.content}"></textarea>
+            </label>
+        </div>
 
-    <button type="button" id="modify-btn">저장</button>
-    <a th:href="@{'/articles/' + ${article.id}}">취소</a>
-    <a href="/articles">목록</a>
-</form>
-
+        <button type="button" id="modify-btn">저장</button>
+        <a th:href="@{'/articles/' + ${article.id}}">취소</a>
+        <a href="/articles">목록</a>
+    </form>
+</main>
 <script src="/js/article.js" defer></script>
+<div th:replace="footer :: footer"></div>
 </body>
 </html>

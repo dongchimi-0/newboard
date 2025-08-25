@@ -4,83 +4,18 @@
 <head>
     <meta charset="UTF-8">
     <title>공지 게시글</title>
-    <link rel="stylesheet" th:href="@{/css/style.css}"> <!-- 스타일 공통화 가능하면 CSS 분리 -->
-    <link rel="stylesheet" th:href="@{/css/style.css}" />
-    <style>
-        h1 {
-            font-size: 28px;
-            font-weight: bold;
-            margin-bottom: 30px;
-            color: #222;
-            text-align: center;
-        }
-        div[sec\\:authorize="isAuthenticated()"] > a {
-            display: inline-block;
-            background-color: #444;
-            color: white;
-            padding: 10px 16px;
-            border-radius: 4px;
-            font-weight: 600;
-            font-size: 16px;
-            text-decoration: none;
-            margin-bottom: 30px;
-            transition: background-color 0.3s ease;
-        }
-        div[sec\\:authorize="isAuthenticated()"] > a:hover {
-            background-color: #222;
-        }
-        .new-article-btn {
-            display: inline-block;
-            padding: 10px 20px;
-            background-color:  #e6e1e1;
-            color: white;
-            font-weight: 600;
-            border-radius: 5px;
-            text-decoration: none;
-            border: none;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-        .new-article-btn:hover {
-            background-color: #217dbb;
-        }
-        ul {
-            max-width: 700px;
-            margin: 0 auto;
-            list-style: none;
-        }
-        ul li {
-            padding: 12px 15px;
-            border-bottom: 1px solid #eee;
-            font-size: 18px;
-        }
-        ul li a {
-            text-decoration: none;
-            color: #3498db;
-            font-weight: 600;
-        }
-        ul li a:hover {
-            text-decoration: underline;
-        }
-        div[th\\:if] {
-            max-width: 700px;
-            margin: 0 auto;
-            font-size: 18px;
-            color: #999;
-            text-align: center;
-            padding: 20px;
-        }
-    </style>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/styleDetail.css}" />
 
 </head>
 <body>
 <div th:replace="header :: header"></div>
 
-<main>
+<main class="list-main">
     <h1 >자유 게시판</h1>
 
     <!-- 카테고리 선택 필터 -->
-    <form th:action="@{/articles/category-filter}" method="get" style="max-width: 700px; margin: 0 auto 30px auto;">
+    <form class="list-main-form" th:action="@{/articles/category-filter}" method="get" >
         <label for="category-select">카테고리 선택: </label>
         <select id="category-select" name="category" required onchange="location.href='/articles/category/' + this.value;">
             <option value="free">자유</option>
@@ -92,22 +27,23 @@
             <button type="submit">필터</button>
         </noscript>
     </form>
-
-
-    <div style="text-align: center;" sec:authorize="isAuthenticated()">
-        <a href="/articles/new" class="new-article-btn">새글</a>
+    <!-- 새 글 작성 버튼 (로그인 사용자만 보임) -->
+    <div class="new-article-btn" sec:authorize="isAuthenticated()">
+        <a href="/articles/new" class="btn">새글</a>
     </div>
 
+    <!-- 글이 있을 때 -->
     <ul class="article-list" th:unless="${#lists.isEmpty(articles)}">
         <li th:each="a : ${articles}">
             <a th:href="@{'/articles/' + ${a.id}}" th:text="${a.title}">제목</a>
             <div>
                 작성일 : <span th:text="${#temporals.format(a.createdAt, 'yyyy-MM-dd HH:mm')}"></span>
+                </span>
             </div>
         </li>
     </ul>
-
     <div th:if="${#lists.isEmpty(articles)}">아직 자유 글이 없습니다.</div>
 </main>
+<div th:replace="footer :: footer"></div>
 </body>
 </html>

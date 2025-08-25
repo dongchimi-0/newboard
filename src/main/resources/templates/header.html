@@ -1,9 +1,16 @@
-
-<!-- templates/header.html -->
 <header class="header" th:fragment="header">
     <a href="/" class="brand">
     <img src="/images/logo.jpg" alt="Black Pepper 로고"/>
     </a>
+
+    <nav class="header-menu">
+        <ul>
+            <li><a href="/">홈</a></li>
+            <li><a href="/articles">게시판</a></li>
+            <li><a href="/about">소개</a></li>
+            <li><a href="/about"></a>포트폴리오</li>
+        </ul>
+    </nav>
 
     <div class="header-login">
           <span sec:authorize="isAnonymous()">
@@ -20,19 +27,7 @@
         </span>
     </div>
 
-    <div class="header-menu">
-        <nav>
-            <ul>
-                <li><a href="/">홈</a></li>
-                <li><a href="/articles">게시판</a></li>
-                <li><a href="/about">블랙페퍼 소개</a></li>
-                <li><a href="/about">???</a></li>
-            </ul>
-        </nav>
-    </div>
-
 </header>
-
 
 
 

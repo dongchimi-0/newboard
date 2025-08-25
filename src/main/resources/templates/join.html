@@ -4,104 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" th:href="@{/css/style.css}" />
-    <style>
-        main {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 0 20px;
-            text-align: center;
-        }
-        main h1 {
-            font-size: 28px;
-            font-weight: bold;
-            margin-bottom: 30px;
-            color: #222;
-        }
-        a {
-            text-decoration: none;
-            color: #3498db;
-            font-weight: 600;
-            margin: 0 5px;
-            font-size: 16px;
-        }
-
-        a:hover {
-            text-decoration: underline;
-        }
-
-        form {
-            display: inline;
-        }
-
-        span, div[sec\\:authorize] {
-            font-size: 16px;
-            color: #333;
-            vertical-align: middle;
-        }
-
-        .signup-box {
-            border: 1px solid #ccc;
-            padding: 20px 30px;
-            max-width: 400px;
-            margin: 0 auto;
-            border-radius: 8px;
-            background-color: #fff;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-            text-align: left;
-        }
-
-        .signup-box div {
-            margin-bottom: 15px;
-        }
-
-        .signup-box input {
-            width: 100%;
-            padding: 6px 8px;
-            box-sizing: border-box;
-            border: 1px solid #bbb;
-            border-radius: 4px;
-            margin-top: 4px;
-        }
-
-        .signup-box button {
-            background-color: #e6e1e1;
-            color: #808080;
-            border: none;
-            padding: 8px 12px;
-            font-weight: 600;
-            font-size: 14px;
-            cursor: pointer;
-            border-radius: 4px;
-            vertical-align: middle;
-            transition: background-color 0.3s ease;
-        }
-
-        .signup-box button:hover {
-            background-color: #d6d2d2;
-        }
-
-        .google-login {
-            display: inline-block;
-            margin-top: 15px;
-            color: #777;
-            font-weight: normal;
-            text-decoration: none;
-            font-size: 16px;
-        }
-        .google-login:hover {
-            color: #0f0f0f;
-            text-decoration: underline;
-        }
-    </style>
+    <link rel="stylesheet" th:href="@{/css/styleDetail.css}" />
     <title>회원가입</title>
 </head>
 
 <body>
-<header>
-    <a href="/" class="brand"> <img src="/images/logo.jpg" alt="Black Pepper 로고" style="height: 50px; object-fit: contain;" /></a>
-</header>
-
-<main>
+<div th:replace="header :: header"></div>
+<main class="join-main">
     <h1>회원가입</h1>
     <div class="signup-box">
         <form method="post" action="/join" th:object="${joinRequest}">
@@ -118,6 +27,6 @@
         <a href="/oauth2/authorization/google" class="google-login">구글로 로그인</a>
     </div>
 </main>
-
+<div th:replace="footer :: footer"></div>
 </body>
 </html>

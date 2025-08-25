@@ -4,110 +4,56 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title th:text="${article.title}">게시글</title>
+
+    <!-- CSRF 토큰 처리 -->
     <meta name="_csrf" th:content="${_csrf.token}">
     <meta name="_csrf_header" th:content="${_csrf.headerName}">
+
+    <!-- 스타일 시트 링크 -->
     <link rel="stylesheet" th:href="@{/css/style.css}" />
-    <style>
-        main {
-            max-width: 800px;
-            margin: 40px auto;
-            padding: 0 20px;
-        }
-
-        main h1 {
-            font-size: 28px;
-            font-weight: bold;
-            margin-bottom: 20px;
-            color: #222;
-            word-break: break-word;
-        }
-
-       main div[th\\:text] {
-         font-size: 16px;
-         margin-bottom: 40px;
-         white-space: pre-wrap;
-         word-break: break-word;
-       }
-
-        #modify-btn-link,
-        #delete-btn {
-            display: inline-block;
-            padding: 8px 14px;
-            margin-right: 10px;
-            border-radius: 4px;
-            font-weight: 600;
-            font-size: 14px;
-            cursor: pointer;
-            text-decoration: none;
-            transition: background-color 0.3s ease;
-            user-select: none;
-            background-color: #e6e1e1;  /* 동일 배경색 */
-            color: #333;                 /* 동일 글자색 */
-            border: none;
-            line-height: normal;
-            vertical-align: middle;
-        }
-
-       .btn {
-            display: inline-block;
-            padding: 8px 14px;
-            margin-right: 10px;
-            border-radius: 4px;
-            font-weight: 600;
-            font-size: 14px;
-            cursor: pointer;
-            text-decoration: none;
-            background-color: #e6e1e1;
-            color: #333;
-            border: none;
-            line-height: normal;
-            vertical-align: middle;
-            user-select: none;
-            transition: background-color 0.3s ease;
-        }
-
-        .btn:hover {
-            background-color: #d6d2d2;
-        }
-
-
-       p > a {
-         text-decoration: none;
-         color: #3498db;
-         font-weight: 600;
-         font-size: 16px;
-       }
-
-       p > a:hover {
-         text-decoration: underline;
-       }
-    </style>
+    <link rel="stylesheet" th:href="@{/css/styleDetail.css}" />
 </head>
 
 <body>
+<!-- 헤더 프래그먼트 포함 -->
 <div th:replace="header :: header"></div>
-<main>
-    <div class="title">
-        <h1 th:text="${article.title}">제목</h1>
+
+<main class="article-detail-main">
+    <div class="article-box">
+    <!-- 게시글 제목 -->
+        <div>
+            <h1 th:text="${article.title}">제목</h1>
+        </div>
+        <hr>
+        <!-- 카테고리 표시 -->
+        <div class="category">
+            <span th:text="${article.category}">카테고리명</span>
+        </div>
+
+        <!-- 게시글 ID (hidden input) -->
+        <input type="hidden" id="article-id" th:value="${article.id}">
+
+        <!-- 게시글 내용 -->
+        <div th:text="${article.content}">내용</div>
+
+        <!-- 작성일 표시 -->
+        <div style="margin-bottom: 1rem; color: #666; font-size: 14px;">
+            작성일: <span th:text="${#temporals.format(article.createdAt, 'yyyy-MM-dd HH:mm')}">2025-08-19 10:30</span>
+        </div>
     </div>
 
-    <div style="margin-bottom: 10px; color: #888; font-size: 14px;">
-        <span th:text="${article.category}">카테고리명</span>
-    </div>
-    <input type="hidden" id="article-id" th:value="${article.id}">
-    <div th:text="${article.content}">내용</div>
-    <div style="margin-bottom: 1rem; color: #666; font-size: 14px;">
-        작성일: <span th:text="${#temporals.format(article.createdAt, 'yyyy-MM-dd HH:mm')}">2025-08-19 10:30</span>
+    <!-- 수정,삭제(작성자만 보임)/목록 버튼 -->
+    <div class="article-buttons">
+        <a  th:if="${isOwner}" th:href="@{'/articles/' + ${article.id} + '/edit'}" class="btn" id="modify-btn-link">수정</a>
+        <button  th:if="${isOwner}" class="btn" id="delete-btn">삭제</button>
+        <a class="btn" href="/articles">목록</a>
     </div>
 
-    <div th:if="${isOwner}">
-        <a th:href="@{'/articles/' + ${article.id} + '/edit'}" class="btn" id="modify-btn-link">수정</a>
-        <button class="btn" id="delete-btn">삭제</button>
-    </div>
-
-    <p><a href="/articles">목록</a></p>
 </main>
 
+<!-- JavaScript 파일 링크 -->
 <script src="/js/article.js" defer></script>
+
+<div th:replace="footer :: footer"></div>
 </body>
 </html>

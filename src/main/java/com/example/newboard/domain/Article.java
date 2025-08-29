@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -34,22 +36,6 @@ public class Article {
     @JoinColumn(name = "author_id", nullable = false)
     private User author;  // User 테이블의 id 와 연결되는 외래키 컬럼
 
-//    @CreatedDate
-//    @Column(updatable = false)
-//    private LocalDateTime createdDate;
-
-//    public LocalDateTime getCreatedDate() {
-//        return createdDate;
-//    }
-//
-//    @PrePersist
-//    public void prePersist(){
-//        this.createdDate = LocalDateTime.now();
-//    }
-
-//    public LocalDateTime getCreatedDate(){
-//        return createdDate;
-//    }
 
     // ✅ 작성일 추가
     @Column(nullable = false, updatable = false)
@@ -61,5 +47,21 @@ public class Article {
         this.createdAt = LocalDateTime.now();
     }
 
+    // 게시글 ↔ 댓글 : 1:N 관계 (양방향)
+    @OneToMany(mappedBy = "article", cascade = CascadeType.ALL, orphanRemoval = true)
+    @Builder.Default   // 빌더 사용시에도 초기화 보장
+    private List<Comment> comments = new ArrayList<>();
+
+    // 양방향 연관관계 편의 메서드(댓글 추가 편의 메서드)
+    public void addComment(Comment comment) {
+        comments.add(comment);
+        comment.setArticle(this);  // 양방향 일관성 유지
+    }
+
+    // 댓글 삭제 편의 메서드
+    public void removeComment(Comment comment) {
+        comments.remove(comment);
+        comment.setArticle(null);
+    }
 
 }

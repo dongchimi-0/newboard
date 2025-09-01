@@ -455,3 +455,129 @@ div[sec\\:authorize] {
     margin-right: 15px;
 }
 /*-----------------------------------------------------------------------*/
+/* 댓글 섹션 전체 */
+#comments {
+    width: 100%;
+    max-width: 1000px;
+    padding: 0 20px;
+    margin: 3rem auto;
+    background: #fafafa;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+    border: 1px solid #e2e2e2;
+}
+
+/* 댓글 목록 */
+.comment-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 2rem;
+}
+
+.comment-item {
+    background-color: #fff;
+    padding: 1rem 1.2rem;
+    border: 1px solid #eee;
+    border-radius: 10px;
+    margin-bottom: 1rem;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+    display: flex;
+    flex-direction: column;
+}
+
+.comment-content {
+    font-size: 0.95rem;
+    color: #333;
+    line-height: 1.5;
+}
+
+/* 댓글 작성일 + 삭제 버튼 */
+.comment-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.75rem;
+    color: #aaa;
+    margin-top: 0.5rem;
+}
+
+.comment-meta button.delete-comment {
+    background: none;
+    border: none;
+    color: #bbb;
+    font-size: 0.75rem;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+.comment-meta button.delete-comment:hover {
+    color: #ff5a5f;
+}
+
+/* 댓글 작성 폼 래퍼 */
+.comment-form-wrapper {
+    border-top: 1px solid #ddd;
+    padding-top: 1.5rem;
+}
+
+/* 댓글 폼 */
+#comment-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+/* 댓글 입력창 */
+#comment-form textarea {
+    width: 100%;
+    min-height: 80px;
+    padding: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    font-size: 0.95rem;
+    resize: vertical;
+    background-color: #fff;
+    transition: border-color 0.3s, box-shadow 0.3s;
+    font-family: inherit;
+}
+
+#comment-form textarea:focus {
+    border-color: #aaa;
+    box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.05);
+    outline: none;
+}
+
+#comment-form textarea::placeholder {
+    color: #bbb;
+}
+
+/* 등록 버튼 */
+#comment-form button {
+    align-self: flex-end;
+    padding: 0.6rem 1.5rem;
+    background-color: #222;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: background-color 0.3s ease;
+}
+
+#comment-form button:hover {
+    background-color: #444;
+}
+
+/* 반응형 */
+@media (max-width: 480px) {
+    #comments {
+        padding: 0 12px;
+    }
+
+    .comment-item {
+        padding: 0.9rem;
+    }
+
+    #comment-form button {
+        width: 100%;
+    }
+}

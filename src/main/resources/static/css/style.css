@@ -105,6 +105,10 @@ main {
   margin-top: 60px;
   border-top: 1px solid #ddd;
   margin-top: 40px;
+  margin: 40px auto 0;
+  width: 100%;
+  max-width: 1000px;
+  padding: 0 20px;
 }
 
 .footer a {
@@ -115,7 +119,6 @@ main {
 .footer a:hover {
   text-decoration: underline;
 }
-
 /* ----------------- 반응형 적용 ----------------- */
 @media (max-width: 768px) {
   .header {

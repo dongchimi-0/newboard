@@ -49,21 +49,21 @@
         <a class="btn" href="/articles">목록</a>
     </div>
 
-    <!-- 댓글 섹션 -->
-    <section id="comments">
-        <h3>💬 댓글</h3>
+    <!-- 댓글 목록 -->
+    <ul id="comment-list" class="comment-list">
+    <li class="comment-item">
+        <div class="comment-content">정말 좋은 글이네요!</div>
+        <div class="comment-meta">2025-08-29 22:56 <button class="delete-comment">삭제</button></div>
+    </li>
+    </ul>
 
-        <!-- 댓글 목록 -->
-        <ul id="comment-list" class="comment-list"></ul>
-
-        <!-- 댓글 작성 폼 -->
+    <!-- 댓글 작성 박스 -->
+    <div class="comment-form-wrapper">
         <form id="comment-form">
-            <textarea id="content" placeholder="댓글 내용" required></textarea>
-            <button type="submit">작성하기</button>
+            <textarea id="content" placeholder="댓글을 입력하세요..." required></textarea>
+            <button type="submit">등록</button>
         </form>
-    </section>
-
-</main>
+    </div>
 
 <!-- JavaScript 파일 링크 -->
 <script src="/js/article.js" defer></script>

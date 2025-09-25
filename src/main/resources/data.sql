@@ -1,6 +1,6 @@
 -- User 더미 데이터
 INSERT INTO users (email, password, name, role)
-VALUES ('test@example.com', '1234', '테스트유저', 'USER');
+VALUES ('test@example.com', '1234', 'testUser', 'USER');
 --
 ---- Article 더미 데이터 (created_at 추가!)
 --INSERT INTO article (title, content, author_id, category, created_date)

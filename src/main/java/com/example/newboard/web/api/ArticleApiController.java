@@ -6,6 +6,7 @@ import com.example.newboard.repository.UserRepository;
 import com.example.newboard.service.ArticleService;
 import com.example.newboard.web.dto.ArticleCreateRequest;
 import com.example.newboard.web.dto.ArticleUpdateRequest;
+import com.example.newboard.web.dto.ArticleViewDto;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -47,10 +48,17 @@ public class ArticleApiController {
 
     // ✅ 게시글 조회 + 조회수 증가
     @GetMapping("/{id}")
-    public ResponseEntity<Article> getArticle(@PathVariable Long id) {
-        Article article = articleService.incrementView(id);
-        return ResponseEntity.ok(article);
+    public ResponseEntity<ArticleViewDto> getArticle(@PathVariable Long id) {
+        // 1️⃣ 조회수 증가
+        articleService.incrementViewCount(id);
+
+        // 2️⃣ DB에서 최신 데이터 다시 읽어서 DTO 변환
+        ArticleViewDto articleDto = articleService.findByIdForView(id);
+
+        // 3️⃣ 클라이언트로 반환
+        return ResponseEntity.ok(articleDto);
     }
+
 
     // ✅ 좋아요 토글
     @PostMapping("/{id}/like")

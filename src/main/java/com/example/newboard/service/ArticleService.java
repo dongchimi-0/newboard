@@ -5,13 +5,12 @@ import com.example.newboard.repository.ArticleRepository;
 import com.example.newboard.repository.UserRepository;
 import com.example.newboard.web.dto.ArticleCreateRequest;
 import com.example.newboard.web.dto.ArticleUpdateRequest;
-import org.springframework.transaction.annotation.Transactional;
+import com.example.newboard.web.dto.ArticleViewDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
-import com.example.newboard.web.dto.ArticleViewDto;
-import java.time.format.DateTimeFormatter;
-
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -40,11 +39,41 @@ public class ArticleService {
                         .author(author)
                         .build()
         ).getId();
-
     }
 
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public void incrementViewCount(Long id) {
+        var article = articleRepository.findByIdWithLikes(id)
+                .orElseThrow(() -> new IllegalArgumentException("Article not found:" + id));
+        article.incrementViews();
+        articleRepository.saveAndFlush(article); // DB에 즉시 반영 + 영속성 컨텍스트 flush
+    }
+
+
+    @Transactional(readOnly = true)
+    public ArticleViewDto findByIdForView(Long id) {
+        var article = articleRepository.findByIdWithLikes(id)
+                .orElseThrow(() -> new IllegalArgumentException("Article not found:" + id));
+
+        System.out.println("[DEBUG] 조회수 값 확인: " + article.getViews());
+
+        return new ArticleViewDto(
+                article.getId(),
+                article.getTitle(),
+                article.getContent(),
+                article.getCategory(),
+                article.getAuthor() != null ? article.getAuthor().getEmail() : "익명",
+                article.getCreatedAt(),
+                article.getViews(),
+                article.getLikeCount()
+        );
+    }
+
+
+    // ✅ 편집 페이지 전용 (엔티티 그대로 반환)
+    @Transactional(readOnly = true)
     public Article findById(Long id) {
-        return articleRepository.findById(id)
+        return articleRepository.findByIdWithLikes(id)
                 .orElseThrow(() -> new IllegalArgumentException("Article not found:" + id));
     }
 
@@ -52,15 +81,14 @@ public class ArticleService {
     public void update(Long id, String email, ArticleUpdateRequest req){
         var article = articleRepository.findByIdAndAuthor_Email(id, email)
                 .orElseThrow(() -> new AccessDeniedException("본인 글이 아닙니다."));
-
         article.update(req.getTitle(), req.getContent(), req.getCategory());
     }
 
-
     @Transactional
     public void delete(Long id, String email){
-
-        if (articleRepository.deleteByIdAndAuthor_Email(id, email) == 0)
+        long result = articleRepository.deleteByIdAndAuthor_Email(id, email);
+        System.out.println("[DEBUG] 삭제 결과: " + result);
+        if (result == 0)
             throw new AccessDeniedException("본인 글이 아닙니다.");
     }
 
@@ -74,9 +102,10 @@ public class ArticleService {
                 .map(article -> new ArticleViewDto(
                         article.getId(),
                         article.getTitle(),
+                        article.getContent(),
                         article.getCategory(),
                         article.getAuthor() != null ? article.getAuthor().getEmail() : "익명",
-                        article.getCreated_at(),
+                        article.getCreatedAt(),
                         article.getViews(),
                         article.getLikeCount()
                 ))
@@ -89,29 +118,27 @@ public class ArticleService {
                 .map(article -> new ArticleViewDto(
                         article.getId(),
                         article.getTitle(),
+                        article.getContent(),
                         article.getCategory(),
                         article.getAuthor() != null ? article.getAuthor().getEmail() : "익명",
-                        article.getCreated_at(),
+                        article.getCreatedAt(),
                         article.getViews(),
                         article.getLikeCount()
                 ))
                 .toList();
     }
 
-
-    // ✅ 조회수 증가 후 Article 반환
     @Transactional
     public Article incrementView(Long articleId) {
-        Article article = articleRepository.findById(articleId)
+        Article article = articleRepository.findByIdWithLikes(articleId)
                 .orElseThrow(() -> new IllegalArgumentException("Article not found:" + articleId));
         article.incrementViews();
         return article;
     }
 
-    // ✅ 좋아요 토글 후 좋아요 수 반환
     @Transactional
     public int toggleLike(Long articleId, String userEmail) {
-        Article article = articleRepository.findById(articleId)
+        Article article = articleRepository.findByIdWithLikes(articleId)
                 .orElseThrow(() -> new IllegalArgumentException("Article not found:" + articleId));
 
         var user = userRepository.findByEmail(userEmail)
@@ -120,5 +147,4 @@ public class ArticleService {
         article.toggleLike(user);
         return article.getLikeCount();
     }
-
 }

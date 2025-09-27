@@ -8,22 +8,24 @@
     <meta name="_csrf_header" th:content="${_csrf.headerName}">
     <link rel="stylesheet" th:href="@{/css/style.css}" />
     <link rel="stylesheet" th:href="@{/css/styleDetail.css}" />
+    <link rel="stylesheet" th:href="@{/css/toast.css}" />
 </head>
 <body>
 <div th:replace="header :: header"></div>
 <main class="edit-main"><h1>글 수정</h1>
-    <form th:action="@{'/articles/' + ${article.id} + '/edit'}" method="post">
+    <form th:action="@{'/articles/' + ${article.id} + '/edit'}" method="post" novalidate>
         <input type="hidden" id="article-id" th:value="${article} != null ? ${article.id} : ''"/>
 
         <div>
             <label>카테고리
-                <select id="category" name="category" required>
-                    <option value="" disabled>카테고리를 선택하세요</option>
-                    <option th:value="'공지'" th:selected="${article.category == '공지'}">공지</option>
-                    <option th:value="'자유'" th:selected="${article.category == '자유'}">자유</option>
-                    <option th:value="'질문'" th:selected="${article.category == '질문'}">질문</option>
-                    <option th:value="'일기'" th:selected="${article.category == '일기'}">일기</option>
+                <select id="category" name="category">
+                    <option value="" disabled selected>카테고리를 선택하세요</option>
+                    <option value="공지">공지</option>
+                    <option value="자유">자유</option>
+                    <option value="질문">질문</option>
+                    <option value="일기">일기</option>
                 </select>
+
             </label>
         </div>
 
@@ -39,12 +41,16 @@
             </label>
         </div>
 
-        <button type="button" id="modify-btn">저장</button>
+        <button id="modify-btn" type="button">수정</button>
+
+
         <a th:href="@{'/articles/' + ${article.id}}">취소</a>
         <a href="/articles">목록</a>
     </form>
 </main>
 <script src="/js/article.js" defer></script>
 <div th:replace="footer :: footer"></div>
+
+<div id="toast" class="toast"></div>
 </body>
 </html>

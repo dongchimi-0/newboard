@@ -5,7 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" th:href="@{/css/style.css}" />
     <link rel="stylesheet" th:href="@{/css/styleDetail.css}" />
-    <title>로그인</title></head>
+    <link rel="stylesheet" th:href="@{/css/toast.css}" />
+    <title>로그인</title>
+</head>
 <body>
 <div th:replace="header :: header"></div>
 <main class="login-main">
@@ -16,9 +18,35 @@
         <div><label>비밀번호 <input type="password" name="password" required></label></div>
         <button type="submit">로그인</button>
     </form>
-    <!-- 구글 로그인 버튼에 margin-top 추가 -->
-    <a href="/oauth2/authorization/google" class="btn btn-primary" style="display: inline-block; margin-top: 15px;">구글로 로그인</a>
+    <a href="/oauth2/authorization/google" class="btn btn-primary" style="display: inline-block; margin-top: 15px;">
+        구글로 로그인
+    </a>
 </main>
+
+<!-- ✅ Toast 함수만 포함 -->
+<script>
+    function showToast(message, type = "success") {
+      const toast = document.createElement("div");
+      toast.className = `toast ${type}`;
+      toast.innerText = message;
+      document.body.appendChild(toast);
+
+      setTimeout(() => toast.classList.add("show"), 50);
+      setTimeout(() => toast.classList.remove("show"), 4000);
+      setTimeout(() => toast.remove(), 4500);
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.has("error")) {
+            showToast("로그인 실패! 이메일 또는 비밀번호를 확인하세요.", "error");
+        }
+        if (urlParams.has("logout")) {
+            showToast("정상적으로 로그아웃되었습니다.", "success");
+        }
+    });
+</script>
+
 <div th:replace="footer :: footer"></div>
 </body>
 </html>

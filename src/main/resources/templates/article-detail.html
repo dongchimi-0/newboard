@@ -12,6 +12,7 @@
     <!-- 스타일 시트 링크 -->
     <link rel="stylesheet" th:href="@{/css/style.css}" />
     <link rel="stylesheet" th:href="@{/css/styleDetail.css}" />
+    <link rel="stylesheet" th:href="@{/css/toast.css}" />
 </head>
 
 <body>
@@ -36,44 +37,64 @@
         <!-- 게시글 내용 -->
         <div th:text="${article.content}">내용</div>
 
-        <!-- 작성일 표시 -->
-        <div style="margin-bottom: 1rem; color: #666; font-size: 14px;">
-            작성일: <span th:text="${#temporals.format(article.createdAt, 'yyyy-MM-dd HH:mm')}">2025-08-19 10:30</span>
+        <!-- 작성자, 작성일, 조회수, 좋아요 -->
+        <div class="article-meta">
+            <div class="left-meta">
+                <span class="author" th:text="'작성자: ' + ${article.authorEmail}">작성자: 홍길동</span>
+                <span class="date"
+                      th:text="${article.createdAt != null ? #temporals.format(article.createdAt, 'yyyy-MM-dd HH:mm') : '날짜없음'}">
+                      2025-08-19 10:30
+                </span>
+            </div>
+            <div class="right-meta">
+                <span class="views">조회수:  <span id="views" th:text="${article.views}">0</span></span>
+                <button id="like-btn" class="like-btn">
+                    <span id="like-icon">🤍</span>
+                    <span id="likes" th:text="${article.likeCount}">0</span>
+                </button>
+            </div>
         </div>
     </div>
 
-    <div class="article-stats">
-        <span>조회수: <span id="views" th:text="${article.views}">0</span></span>
-        <span>좋아요: <span id="likes" th:text="${article.likedUsers.size()}">0</span></span>
-        <button id="like-btn">좋아요</button>
-    </div>
+
 
     <!-- 수정,삭제(작성자만 보임)/목록 버튼 -->
     <div class="article-buttons">
         <a  th:if="${isOwner}" th:href="@{'/articles/' + ${article.id} + '/edit'}" class="btn" id="modify-btn-link">수정</a>
-        <button  th:if="${isOwner}" class="btn delete-comment">삭제</button>
+        <button th:if="${isOwner}" class="btn" id="delete-btn">삭제</button>
         <a class="btn" href="/articles">목록</a>
     </div>
 
-    <!-- 댓글 목록 -->
-    <ul id="comment-list" class="comment-list">
-    <li class="comment-item">
-        <div class="comment-content">정말 좋은 글이네요!</div>
-        <div class="comment-meta">2025-08-29 22:56 <button class="delete-comment">삭제</button></div>
-    </li>
-    </ul>
+    <!-- 댓글 섹션 전체 -->
+    <div id="comments">
+        <h3>댓글</h3>
+        <!-- 댓글 목록 -->
+        <ul id="comment-list" class="comment-list">
+            <li class="comment-item">
+                <div class="comment-content">정말 좋은 글이네요!</div>
+                <div class="comment-meta">
+                    2025-08-29 22:56
+                    <button class="delete-comment">삭제</button>
+                </div>
+            </li>
+        </ul>
 
-    <!-- 댓글 작성 박스 -->
-    <div class="comment-form-wrapper">
-        <form id="comment-form">
-            <textarea id="content" placeholder="댓글을 입력하세요..." required></textarea>
-            <button type="submit">등록</button>
-        </form>
+        <!-- 댓글 작성 박스 -->
+        <div class="comment-form-wrapper">
+            <form id="comment-form">
+                <textarea id="content" placeholder="댓글을 입력하세요..." required></textarea>
+                <button type="submit">등록</button>
+            </form>
+        </div>
     </div>
 
-<!-- JavaScript 파일 링크 -->
+
+    <!-- JavaScript 파일 링크 -->
 <script src="/js/article.js" defer></script>
 
 <div th:replace="footer :: footer"></div>
+
+    <div id="toast" class="toast"></div>
 </body>
+
 </html>

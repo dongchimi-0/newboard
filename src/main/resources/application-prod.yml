@@ -17,13 +17,17 @@ spring:
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     hibernate:
-      ddl-auto: update # 개발시엔 update, 운영/배포시엔 validate 추천
+      ddl-auto: validate   # ⭐ 운영에서는 validate로 (스키마 안전성 확보)
     show-sql: false
     properties:
       hibernate:
         jdbc:
           lob:
             non_contextual_creation: true
+
+  sql:
+    init:
+      mode: never          # ⭐ 운영에서는 data.sql 실행 안 함
 
   security:
     oauth2:
@@ -33,4 +37,3 @@ spring:
             client-id: ${GOOGLE_CLIENT_ID}
             client-secret: ${GOOGLE_CLIENT_SECRET}
             scope: openid, profile, email
-

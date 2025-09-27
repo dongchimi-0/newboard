@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Set;
 
 @Entity
+@Table(name = "article")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
@@ -40,13 +41,12 @@ public class Article {
 
 
     // ✅ 작성일 추가
-    @Column(nullable = false, updatable = false)
-    private LocalDateTime created_at;
+    @Column(name = "created_at", nullable = false, updatable = false)
+    private LocalDateTime createdAt;  // 필드 이름만 변경 (camelCase)
 
-    // 엔티티가 저장될 때 자동으로 시간 넣기
     @PrePersist
     protected void onCreate() {
-        this.created_at = LocalDateTime.now();
+        this.createdAt = LocalDateTime.now();
     }
 
     // 게시글 ↔ 댓글 : 1:N 관계 (양방향)
@@ -99,7 +99,7 @@ public class Article {
 
     // 좋아요 수 반환
     public int getLikeCount() {
-        return likedUsers.size();
+        return likedUsers != null ? likedUsers.size() : 0;
     }
 
 

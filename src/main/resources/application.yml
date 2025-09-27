@@ -1,24 +1,26 @@
 spring:
   profiles:
-    active: local  # ✅ 기본 실행 프로필은 local
+    active: local   # ⭐ 기본 실행 프로필 → local (배포 시 prod로 변경)
 
   thymeleaf:
-    cache: false
+    cache: false    # 개발 시 캐시 끄기
 
   jpa:
     open-in-view: false
     hibernate:
-      ddl-auto: update          # ✅ 개발 중에는 update, 배포 시에는 validate 권장
+      ddl-auto: update
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
     properties:
       hibernate:
         format_sql: true
         jdbc:
           time_zone: Asia/Seoul
-    defer-datasource-initialization: true  # ⭐ 테이블 생성 후 data.sql 실행 보장
+    defer-datasource-initialization: true  # 테이블 생성 후 data.sql 실행 보장
 
   sql:
     init:
-      mode: always              # ⭐ data.sql 항상 실행
+      mode: always              # ⭐ 개발 단계에서는 data.sql 항상 실행
       data-locations: classpath:data.sql
 
   security:

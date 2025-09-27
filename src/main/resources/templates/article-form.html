@@ -8,6 +8,8 @@
     <meta name="_csrf_header" th:content="${_csrf.headerName}">
     <link rel="stylesheet" th:href="@{/css/style.css}" />
     <link rel="stylesheet" th:href="@{/css/styleDetail.css}" />
+    <link rel="stylesheet" th:href="@{/css/toast.css}" />
+
 </head>
 
 <body>
@@ -16,6 +18,19 @@
     <h1>새 글 작성</h1>
     <form th:object="${articleCreateRequest}" method="post" action="/articles">
         <input type="hidden" id="article-id" th:value="${article} != null ? ${article.id} : ''"/>
+
+        <div>
+            <label for="category">카테고리</label>
+            <select id="category" name="category">
+                <option value="" disabled selected>카테고리를 선택하세요</option>
+                <option value="공지">공지</option>
+                <option value="자유">자유</option>
+                <option value="질문">질문</option>
+                <option value="일기">일기</option>
+            </select>
+
+        </div>
+
         <div>
             <label>제목
                 <input type="text" id="title" name="title" required>
@@ -26,17 +41,9 @@
                 <textarea id="content" name="content" rows="8" required></textarea>
             </label>
         </div>
-        <div>
-            <label for="category">카테고리</label>
-            <select name="category" id="category" th:field="*{category}">
-                <option value="공지">공지</option>
-                <option value="자유">자유</option>
-                <option value="질문">질문</option>
-                <option value="일기">일기</option>
-            </select>
-        </div>
 
-        <button type="button" id="create-btn">저장</button>
+        <button id="create-btn" type="button">저장</button>
+
         <a href="/articles">목록</a>
     </form>
 </main>

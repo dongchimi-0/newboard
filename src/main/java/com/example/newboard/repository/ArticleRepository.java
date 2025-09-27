@@ -27,6 +27,11 @@ public interface ArticleRepository extends JpaRepository<Article, Long> {
     @Query("select a FROM Article a JOIN FETCH a.author")
     List<Article> findAllWithAuthor();
 
+    // ArticleRepository.java
+    @Query(" SELECT a FROM Article a LEFT JOIN FETCH a.author LEFT JOIN FETCH a.likedUsers WHERE a.id = :id ")
+    Optional<Article> findByIdWithLikes(@Param("id") Long id);
+
+
 }
 
 

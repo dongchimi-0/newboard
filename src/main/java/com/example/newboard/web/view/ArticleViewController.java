@@ -5,6 +5,7 @@ import com.example.newboard.service.ArticleService;
 import com.example.newboard.web.dto.ArticleCreateRequest;
 import com.example.newboard.web.dto.ArticleUpdateRequest;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -31,13 +32,19 @@ public class ArticleViewController {
     }
 
     @GetMapping("/articles/{id}")
-    public String detail(@PathVariable Long id, Model model, Authentication auth){
-        var article = articleService.findById(id);
-        model.addAttribute("article", article);
-        boolean isOwner = auth != null && article.getAuthor().getEmail().equals(auth.getName());
+    public String detail(@PathVariable Long id, Model model, Authentication auth) {
+        articleService.incrementViewCount(id);
+
+        var articleDto = articleService.findByIdForView(id);
+
+        model.addAttribute("article", articleDto);
+
+        boolean isOwner = auth != null && articleDto.getAuthorEmail().equals(auth.getName());
         model.addAttribute("isOwner", isOwner);
+
         return "article-detail";
     }
+
 
     @GetMapping("/articles/{id}/edit")
     public String editForm(@PathVariable Long id, Model model){
@@ -45,6 +52,14 @@ public class ArticleViewController {
         model.addAttribute("article", article);
         return "article-edit";
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id, Authentication auth) {
+        System.out.println("[DEBUG] 삭제 요청: id=" + id + ", user=" + auth.getName());
+        articleService.delete(id, auth.getName());
+        return ResponseEntity.noContent().build();
+    }
+
 
     // 공지 카테고리 페이지
     @GetMapping("/articles/category/notice")
@@ -77,27 +92,5 @@ public class ArticleViewController {
         model.addAttribute("articles", articles);
         return "category-diary";
     }
-
-//    @GetMapping("/articles/category/{category}")
-//    public String getCategoryPage(@PathVariable String category, Model model) {
-//        // 모든 카테고리 페이지에서 필요한 공통 로직
-//        List<Article> articles = articleService.findByCategory(category);
-//        model.addAttribute("articles", articles);
-//
-//        // 카테고리 값에 따라 다른 HTML 파일 반환
-//        if ("notice".equals(category)) {
-//            return "category-notice";
-//        } else if ("free".equals(category)) {
-//            return "category-free";
-//        } else if ("qna".equals(category)) {
-//            return "category-qna";
-//        } else if ("diary".equals(category)) {
-//            return "category-diary";
-//        } else {
-//            // 존재하지 않는 카테고리일 경우 에러 페이지 또는 기본 페이지로 리다이렉트
-//            return "redirect:/articles";
-//        }
-//    }
-
 
 }

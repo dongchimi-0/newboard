@@ -1,15 +1,25 @@
-# 공통
 spring:
+  profiles:
+    active: local  # ✅ 기본 실행 프로필은 local
+
   thymeleaf:
     cache: false
 
   jpa:
     open-in-view: false
+    hibernate:
+      ddl-auto: update          # ✅ 개발 중에는 update, 배포 시에는 validate 권장
     properties:
       hibernate:
         format_sql: true
         jdbc:
-          time_zone: Asia/Seoul   # ✅ Hibernate가 DB ↔ Java 변환할 때 KST 사용
+          time_zone: Asia/Seoul
+    defer-datasource-initialization: true  # ⭐ 테이블 생성 후 data.sql 실행 보장
+
+  sql:
+    init:
+      mode: always              # ⭐ data.sql 항상 실행
+      data-locations: classpath:data.sql
 
   security:
     oauth2:
@@ -21,7 +31,7 @@ spring:
             scope: openid, profile, email
 
   jackson:
-    time-zone: Asia/Seoul   # ✅ JSON 직렬화/역직렬화도 KST로 맞춤
+    time-zone: Asia/Seoul
 
 server:
   port: ${PORT:8080}
@@ -30,8 +40,3 @@ logging:
   level:
     org.thymeleaf: DEBUG
     org.springframework.security: DEBUG
-
----
-spring:
-  profiles:
-    active: local   # 기본 실행은 로컬

@@ -76,7 +76,9 @@ public class ArticleService {
                         article.getTitle(),
                         article.getCategory(),
                         article.getAuthor() != null ? article.getAuthor().getEmail() : "익명",
-                        article.getCreatedAt()
+                        article.getCreated_at(),
+                        article.getViews(),
+                        article.getLikeCount()
                 ))
                 .collect(toList());
     }
@@ -89,11 +91,34 @@ public class ArticleService {
                         article.getTitle(),
                         article.getCategory(),
                         article.getAuthor() != null ? article.getAuthor().getEmail() : "익명",
-                        article.getCreatedAt()
+                        article.getCreated_at(),
+                        article.getViews(),
+                        article.getLikeCount()
                 ))
                 .toList();
     }
 
 
+    // ✅ 조회수 증가 후 Article 반환
+    @Transactional
+    public Article incrementView(Long articleId) {
+        Article article = articleRepository.findById(articleId)
+                .orElseThrow(() -> new IllegalArgumentException("Article not found:" + articleId));
+        article.incrementViews();
+        return article;
+    }
+
+    // ✅ 좋아요 토글 후 좋아요 수 반환
+    @Transactional
+    public int toggleLike(Long articleId, String userEmail) {
+        Article article = articleRepository.findById(articleId)
+                .orElseThrow(() -> new IllegalArgumentException("Article not found:" + articleId));
+
+        var user = userRepository.findByEmail(userEmail)
+                .orElseThrow(() -> new IllegalArgumentException("User not found:" + userEmail));
+
+        article.toggleLike(user);
+        return article.getLikeCount();
+    }
 
 }

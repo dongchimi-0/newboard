@@ -42,10 +42,16 @@
         </div>
     </div>
 
+    <div class="article-stats">
+        <span>조회수: <span id="views" th:text="${article.views}">0</span></span>
+        <span>좋아요: <span id="likes" th:text="${article.likedUsers.size()}">0</span></span>
+        <button id="like-btn">좋아요</button>
+    </div>
+
     <!-- 수정,삭제(작성자만 보임)/목록 버튼 -->
     <div class="article-buttons">
         <a  th:if="${isOwner}" th:href="@{'/articles/' + ${article.id} + '/edit'}" class="btn" id="modify-btn-link">수정</a>
-        <button  th:if="${isOwner}" class="btn" id="delete-btn">삭제</button>
+        <button  th:if="${isOwner}" class="btn delete-comment">삭제</button>
         <a class="btn" href="/articles">목록</a>
     </div>
 

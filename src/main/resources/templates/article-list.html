@@ -41,6 +41,10 @@
                 작성일 : <span th:text="${#temporals.format(a.createdAt, 'yyyy-MM-dd HH:mm')}"></span>
                 </span>
             </div>
+            <div class="article-stats">
+                <span>조회수: <span th:text="${a.views}">0</span></span>
+                <span>좋아요: <span th:text="${a.likeCount}">0</span></span>
+            </div>
         </li>
     </ul>
 

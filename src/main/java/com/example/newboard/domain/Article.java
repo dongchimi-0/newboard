@@ -5,7 +5,9 @@ import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -39,12 +41,12 @@ public class Article {
 
     // ✅ 작성일 추가
     @Column(nullable = false, updatable = false)
-    private LocalDateTime createdAt;
+    private LocalDateTime created_at;
 
     // 엔티티가 저장될 때 자동으로 시간 넣기
     @PrePersist
     protected void onCreate() {
-        this.createdAt = LocalDateTime.now();
+        this.created_at = LocalDateTime.now();
     }
 
     // 게시글 ↔ 댓글 : 1:N 관계 (양방향)
@@ -63,5 +65,42 @@ public class Article {
         comments.remove(comment);
         comment.setArticle(null);
     }
+
+    // ✅ 조회수
+    @Column(nullable = false)
+    @org.hibernate.annotations.ColumnDefault("0")
+    @Builder.Default
+    private int views = 0;
+
+    // 조회수 증가
+    public void incrementViews() {
+        this.views += 1;
+    }
+
+
+    // ✅ 좋아요 누른 사용자
+    @ManyToMany
+    @JoinTable(
+            name = "article_likes",
+            joinColumns = @JoinColumn(name = "article_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id")
+    )
+    @Builder.Default
+    private Set<User> likedUsers = new HashSet<>();
+
+    // 좋아요 토글
+    public void toggleLike(User user) {
+        if (likedUsers.contains(user)) {
+            likedUsers.remove(user);
+        } else {
+            likedUsers.add(user);
+        }
+    }
+
+    // 좋아요 수 반환
+    public int getLikeCount() {
+        return likedUsers.size();
+    }
+
 
 }

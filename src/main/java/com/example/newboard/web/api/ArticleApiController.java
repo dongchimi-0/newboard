@@ -2,6 +2,7 @@ package com.example.newboard.web.api;
 
 
 import com.example.newboard.domain.Article;
+import com.example.newboard.repository.UserRepository;
 import com.example.newboard.service.ArticleService;
 import com.example.newboard.web.dto.ArticleCreateRequest;
 import com.example.newboard.web.dto.ArticleUpdateRequest;
@@ -10,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
@@ -40,6 +42,22 @@ public class ArticleApiController {
     public ResponseEntity<Void> delete(@PathVariable Long id, Authentication auth) {
         articleService.delete(id, auth.getName());
         return ResponseEntity.noContent().build();
+    }
+
+
+    // ✅ 게시글 조회 + 조회수 증가
+    @GetMapping("/{id}")
+    public ResponseEntity<Article> getArticle(@PathVariable Long id) {
+        Article article = articleService.incrementView(id);
+        return ResponseEntity.ok(article);
+    }
+
+    // ✅ 좋아요 토글
+    @PostMapping("/{id}/like")
+    public ResponseEntity<Integer> likeArticle(@PathVariable Long id, Authentication auth) {
+        // auth.getName() → 현재 로그인한 사용자의 이메일
+        int likeCount = articleService.toggleLike(id, auth.getName());
+        return ResponseEntity.ok(likeCount);
     }
 
 

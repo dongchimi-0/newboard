@@ -1,8 +1,4 @@
 spring:
-  h2:
-    console:
-      enabled: false
-
   datasource:
     url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://${DB_HOST}:${DB_PORT}/${DB_NAME}}
     username: ${SPRING_DATASOURCE_USERNAME:${DB_USER}}
@@ -17,7 +13,7 @@ spring:
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     hibernate:
-      ddl-auto: validate   # ⭐ 운영에서는 validate로 (스키마 안전성 확보)
+      ddl-auto: update
     show-sql: false
     properties:
       hibernate:

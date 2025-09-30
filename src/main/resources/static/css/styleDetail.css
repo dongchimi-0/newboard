@@ -1,4 +1,4 @@
-/* ===== 폰트 /body/ 제목h1/ main 스타일 ===== */
+/* ==================== 폰트 / 전체 레이아웃 ==================== */
 @font-face {
   font-family: 'NotoSansKR';
   src: url('/fonts/NotoSansKR-VariableFont_wght.ttf') format('truetype');
@@ -17,17 +17,9 @@ body {
   line-height: 1.6;
   min-width: 320px;
 }
-/* ===== 메인 박스 레이아웃 및 정렬 ===== */
-.article-detail-main {
-  max-width: 1000px;
-  margin: 40px auto;
-  padding: 0 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  word-break: break-word;
-}
 
+/* ==================== 메인 레이아웃 ==================== */
+.article-detail-main,
 .list-main,
 .home-main,
 .join-main,
@@ -35,16 +27,13 @@ body {
   max-width: 1000px;
   margin: 40px auto;
   padding: 0 20px;
-  box-sizing: border-box;
   word-break: break-word;
 }
-.login-main{
-    text-align: center;
-    max-width: 400px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+
+.article-detail-main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .home-main {
@@ -53,21 +42,19 @@ body {
   gap: 40px;
 }
 
-.home-main section {
-  flex: 3;
+.home-main section { flex: 3; }
+.home-main aside { flex: 1; }
+
+.login-main {
+  text-align: center;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
-.home-main aside {
-  flex: 1;
-}
-.article-created-at {
-     margin-bottom: 1rem;
-     color: #666;
-     font-size: 14px;
- }
-
-
-/* ===== 제목 스타일 ===== */
+/* ==================== 타이틀 ==================== */
 .article-detail-main h1,
 .list-main h1,
 .home-main h1,
@@ -82,15 +69,46 @@ body {
   text-align: center;
 }
 
-.list-main h1 {
-  margin-bottom: 30px;
-}
-
+.list-main h1,
 .home-main h1 {
   margin-bottom: 30px;
 }
-/*-----------------------------------------------------------------------*/
-/* ===== 공통 텍스트 스타일 ===== */
+
+/* ==================== 홈 - 내 정보 ==================== */
+.avatar {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    display: block;
+    margin: 0 auto;
+}
+
+.profile-section {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-direction: column;
+}
+
+.profile-img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 10px;
+}
+
+.btn-sm {
+  padding: 6px 10px;
+  font-size: 14px;
+  border: 1px solid #ddd;
+  background: #fff;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+/* ==================== 공통 텍스트 ==================== */
 .article-detail-main div[th\\:text],
 .article-detail-main > div[style],
 .article-list li div,
@@ -102,9 +120,6 @@ div[sec\\:authorize] {
   color: #666;
   margin-bottom: 1rem;
 }
- .article-detail-main > div[style] {
- color: #666; font-size: 14px; margin-bottom: 1rem;
- }
 
 .article-detail-main div[th\\:text] {
   font-size: 16px;
@@ -119,9 +134,7 @@ div[sec\\:authorize] {
   font-size: 14px;
 }
 
-/*-----------------------------------------------------------------------*/
-
-/* =====  공통 버튼 스타일 ===== */
+/* ==================== 버튼 ==================== */
 .btn,
 .home-main button,
 .join-main .signup-box button,
@@ -137,15 +150,14 @@ div[sec\\:authorize] {
   background-color: #e6e1e1;
   color: #808080;
   transition: background-color 0.3s ease;
-  vertical-align: middle;
 }
 
 .btn:hover,
 .home-main button:hover,
 .join-main .signup-box button:hover,
 .login-main button:hover,
-.login-main a.btn:hover
-.form-main a:hover{
+.login-main a.btn:hover,
+.form-main a:hover {
   background-color: #d6d2d2;
 }
 
@@ -153,18 +165,14 @@ div[sec\\:authorize] {
 .new-article-btn {
   display: flex;
   gap: 10px;
-  margin-top: 0;
   flex-wrap: wrap;
   justify-content: center;
   width: 100%;
+  margin-top: 0;
 }
 
-/*-----------------------------------------------------------------------*/
-/* 가입 join */
-
-.join-main form {
-  display: inline;
-}
+/* ==================== Join ==================== */
+.join-main form { display: inline; }
 
 .join-main .signup-box {
   border: 1px solid #ccc;
@@ -177,17 +185,15 @@ div[sec\\:authorize] {
   text-align: left;
 }
 
-.join-main .signup-box div {
-  margin-bottom: 15px;
-}
+.join-main .signup-box div { margin-bottom: 15px; }
 
 .join-main .signup-box input {
   width: 100%;
   padding: 6px 8px;
-  box-sizing: border-box;
   border: 1px solid #bbb;
   border-radius: 4px;
   margin-top: 4px;
+  box-sizing: border-box;
 }
 
 .join-main .google-login {
@@ -212,14 +218,9 @@ div[sec\\:authorize] {
   font-size: 16px;
 }
 
-.join-main a:hover {
-  text-decoration: underline;
-}
+.join-main a:hover { text-decoration: underline; }
 
-
-/*-----------------------------------------------------------------------*/
-/* 로그인 login */
-
+/* ==================== Login ==================== */
 .login-main form > div {
   margin-bottom: 20px;
   text-align: left;
@@ -250,217 +251,215 @@ div[sec\\:authorize] {
   box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
 }
 
-/*-------------------------------디테일 detail----------------------------------------*/
-/* 디테일 detail */
+/* ==================== 게시글 디테일 ==================== */
+.article-box {
+  border: 1px solid #ccc;
+  padding: 20px;
+  max-width: 700px;
+  border-radius: 6px;
+  background-color: #fff;
+  margin-bottom: 20px;
+}
 
- /* 게시글 전체 박스 스타일 */
- .article-box {
-     border: 1px solid #ccc;
-     padding: 20px; width: 100%;
-     max-width: 700px;
-     box-sizing: border-box;
-     border-radius: 6px;
-      background-color: #fff;
-      margin-bottom: 20px; /* 버튼과의 간격 */
-  }
+.article-box hr {
+  border: none;
+  border-bottom: 1px solid #ddd;
+  margin: 10px 0 20px;
+}
 
-  /* 제목과 본문 구분선 */
- .article-box hr {
-       border: none;
-       border-bottom: 1px solid #ddd;
-       margin: 10px 0 20px 0;
- }
+.article-created-at { margin-bottom: 1rem; color: #666; font-size: 14px; }
 
- /*-----------------------------------------------------------------------*/
- /* 리스트 페이지 list */
-/* ===== 카테고리 필터 ===== */
+/* ==================== 리스트 페이지 ==================== */
 .list-main-form {
-    margin-bottom: 30px;
-    text-align: center;
+  margin-bottom: 30px;
+  text-align: center;
 }
-.list-main-form label {
-    font-weight: 600;
-    margin-right: 8px;
- }
- .list-main-form select {
-     padding: 6px 10px;
-     font-size: 14px;
-     border-radius: 4px;
-     border: 1px solid #ccc;
- }
- /* ===== 게시글 리스트 ===== */
- .article-list {
-     list-style: none;
-     padding: 0;
-     margin: 0;
-  }
-  .article-list li {
-      padding: 15px 20px;
-      border-bottom: 1px solid #ddd;
-      background-color: #fff;
-      transition: background-color 0.2s;
-  }
- .article-list li:hover {
-     background-color: #f9f9f9;
- }
 
- .article-list li a {
-     font-size: 18px;
-     color: #333;
-     text-decoration: none;
-     font-weight: 600;
- }
- .article-list li a:hover {
-     text-decoration: underline;
- }
- .article-list li div {
-     font-size: 13px;
-     color: #777;
-     margin-top: 5px;
- }
- /* ===== 게시글 없음 메시지 ===== */
- .article-list-empty {
-     text-align: center;
-     font-size: 16px;
-     color: #999; marg
- }
-/*-----------------------------------------------------------------------*/
-/* 홈 home*/
+.list-main-form label {
+  font-weight: 600;
+  margin-right: 8px;
+}
+
+.list-main-form select {
+  padding: 6px 10px;
+  font-size: 14px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+
+.article-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.article-list li {
+  padding: 15px 20px;
+  border-bottom: 1px solid #ddd;
+  background-color: #fff;
+  transition: background-color 0.2s;
+}
+
+.article-list li:hover { background-color: #f9f9f9; }
+
+.article-list li a {
+  font-size: 18px;
+  color: #333;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.article-list li a:hover { text-decoration: underline; }
+
+.article-list li div {
+  font-size: 13px;
+  color: #777;
+  margin-top: 5px;
+}
+
+.article-list-empty {
+  text-align: center;
+  font-size: 16px;
+  color: #999;
+}
+
+/* ==================== 홈 화면 ==================== */
 .post-preview-box {
-    border: 1px solid #ccc;
-    padding: 16px;
-    margin-bottom: 40px;
-    border-radius: 8px;
+  border: 1px solid #ccc;
+  padding: 16px;
+  margin-bottom: 40px;
+  border-radius: 8px;
+  background-color: #fdfdfd;
 }
+
 .post-preview-box h3 {
-    border-bottom: 1px solid #eee;
-    padding-bottom: 8px;
-    margin-bottom: 16px;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 8px;
+  margin-bottom: 16px;
 }
-.post-preview-box:nth-child(odd) {
-    background-color: #fdfdfd;
-}
-.post-preview-box ul {
-    list-style: none;
-    padding-left: 0;
-    margin: 0;
-}
+
+.post-preview-box ul { list-style: none; padding-left: 0; margin: 0; }
 
 .home-main aside {
-    flex: 1;
-    background-color: #e9ecef;
-    border: 1px solid #ced4da;
-    border-radius: 10px; padding: 15px;
-    font-size: 14px;
+  flex: 1;
+  background-color: #e9ecef;
+  border: 1px solid #ced4da;
+  border-radius: 10px;
+  padding: 15px;
+  font-size: 14px;
 }
-.home-main aside ul {
-    list-style: none;
-    padding-left: 0;
-    margin: 5px;
-}
-.home-main aside ul li {
-    margin-bottom: 7px;
-}
-.user-info {
-    text-align: center;
-    margin-bottom: 15px;
-}
-.user-info form{
-    margin-top: 8px;
-    display: inline;
-}
-.user-info img {
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    object-fit: cover;
-    margin-bottom: 10px;
-}
-.user-hi {
-    font-size: 14px;
-    font-weight: 500;
-    margin-bottom: 5px;
-    color: #333;
-}
-.home-main a {
-    text-decoration: none;
-    color: #3498db;
-    font-weight: 600;
-    margin: 0 5px;
-    font-size: 16px;
-}
-.home-main aside a {
-    color: #242424;
-}
-.home-main .category-list a {
-    color: #555555;
-}
-.home-main a:hover {
-    text-decoration: underline;
-}
-/*-----------------------------------------------------------------------*/
-/* ======새글작성 form===== */ /* ======글 수정 edit===== */
 
+.home-main aside ul { list-style: none; padding-left: 0; margin: 5px; }
+.home-main aside ul li { margin-bottom: 7px; }
+
+.user-info { text-align: center; margin-bottom: 15px; }
+
+.user-info img {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 10px;
+}
+
+.user-hi {
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 5px;
+  color: #333;
+}
+
+.home-main a {
+  text-decoration: none;
+  color: #3498db;
+  font-weight: 600;
+  margin: 0 5px;
+  font-size: 16px;
+}
+
+.home-main a:hover { text-decoration: underline; }
+.home-main aside a { color: #242424; }
+.home-main .category-list a { color: #555; }
+
+/* ==================== 글 작성 / 수정 ==================== */
 .edit-main,
 .form-main {
-    display: flex;
-    flex-direction: column; /* 세로 방향 정렬 */
-    justify-content: center; /* 세로 중앙 정렬 */
-    align-items: center; /* 가로 중앙 정렬 */
-    min-height: calc(100vh - 60px - 40px); /* 헤더 높이와 아래 마진 빼기 */
-    padding: 20px;
-    text-align: center; /* 텍스트도 중앙 정렬 */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: calc(100vh - 60px - 40px);
+  padding: 20px;
+  text-align: center;
 }
 
 .edit-main form,
 .form-main form {
-    max-width: 600px; width: 100%; text-align: left; /* 폼 내부는 왼쪽 정렬 */
+  max-width: 600px;
+  width: 100%;
+  text-align: left;
 }
 
 .edit-main label,
 .form-main label {
-    display: block; font-weight: 600; margin-bottom: 8px; color: #444;
+  display: block;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #444;
 }
 
 .form-main input[type="text"], textarea,
-.edit-main input[type="text"], textarea{
-    width: 100%;
-    padding: 10px 12px;
-    margin-bottom: 20px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 16px;
-    resize: vertical;
+.edit-main input[type="text"], textarea {
+  width: 100%;
+  padding: 10px 12px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+  resize: vertical;
 }
 
 .edit-main button#modify-btn,
 .form-main button#create-btn {
-    background-color: #444;
-    color: white;
-    border: none;
-    padding: 10px 18px;
-    border-radius: 4px;
-    font-weight: 600;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    user-select: none;
-    margin-right: 10px;
+  background-color: #444;
+  color: white;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 4px;
+  font-weight: 600;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-right: 10px;
 }
 
-.edit-body button#modify-btn:hover,
-.form-main button#create-btn:hover{
-    background-color: #222;
+.edit-main button#modify-btn:hover,
+.form-main button#create-btn:hover {
+  background-color: #222;
 }
 
 .edit-main a,
 .form-main a {
-    color: #3498db;
-    font-weight: 600; font-size: 16px;
-    text-decoration: none;
-    margin-right: 15px;
+  color: #3498db;
+  font-weight: 600;
+  font-size: 16px;
+  text-decoration: none;
+  margin-right: 15px;
 }
 
+.article-image {
+  text-align: center;
+  margin: 20px 0;
+}
+
+.article-image img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+
+/* ==================== 좋아요 ==================== */
 .article-meta {
   display: flex;
   justify-content: space-between;
@@ -479,148 +478,111 @@ div[sec\\:authorize] {
   transition: transform 0.2s ease;
 }
 
-.like-btn:hover {
-  transform: scale(1.1);
-}
+.like-btn:hover { transform: scale(1.1); }
+.like-btn.liked #like-icon { color: red; }
 
-.like-btn.liked #like-icon {
-  color: red;
-}
-
-/*-----------------------------------------------------------------------*/
-/* 댓글 섹션 전체 */
+/* ==================== 댓글 ==================== */
 #comments {
-    width: 100%;
-    max-width: 700px;
-    padding: 1.5rem 1.5rem;
-    margin: 2rem auto;
-    background: #fafafa;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.04);
-    border: 1px solid #e2e2e2;
+  width: 100%;
+  max-width: 700px;
+  padding: 1.5rem;
+  margin: 2rem auto;
+  background: #fafafa;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+  border: 1px solid #e2e2e2;
 }
 
 #comments h3 {
-    font-size: 1.1rem;
-    font-weight: 600;
-    margin-bottom: 1rem;
-    color: #333;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: #333;
 }
 
-/* 댓글 목록 */
-.comment-list {
-    list-style: none;
-    padding: 0;
-    margin: 0 0 2rem;
-}
+.comment-list { list-style: none; padding: 0; margin: 0 0 2rem; }
 
 .comment-item {
-    background-color: #fff;
-    padding: 1rem 1.2rem;
-    border: 1px solid #eee;
-    border-radius: 10px;
-    margin-bottom: 1rem;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
-    display: flex;
-    flex-direction: column;
+  background-color: #fff;
+  padding: 1rem 1.2rem;
+  border: 1px solid #eee;
+  border-radius: 10px;
+  margin-bottom: 1rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+  display: flex;
+  flex-direction: column;
 }
 
 .comment-content {
-    font-size: 0.95rem;
-    color: #333;
-    line-height: 1.5;
+  font-size: 0.95rem;
+  color: #333;
+  line-height: 1.5;
 }
 
-/* 댓글 작성일 + 삭제 버튼 */
 .comment-meta {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 0.75rem;
-    color: #aaa;
-    margin-top: 0.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.75rem;
+  color: #aaa;
+  margin-top: 0.5rem;
 }
 
 .comment-meta button.delete-comment {
-    background: none;
-    border: none;
-    color: #bbb;
-    font-size: 0.75rem;
-    cursor: pointer;
-    transition: color 0.2s;
-}
-.comment-meta button.delete-comment:hover {
-    color: #ff5a5f;
+  background: none;
+  border: none;
+  color: #bbb;
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: color 0.2s;
 }
 
-/* 댓글 작성 폼 래퍼 */
-.comment-form-wrapper {
-    border-top: 1px solid #ddd;
-    padding-top: 1.5rem;
-}
+.comment-meta button.delete-comment:hover { color: #ff5a5f; }
 
-/* 댓글 폼 */
+.comment-form-wrapper { border-top: 1px solid #ddd; padding-top: 1.5rem; }
+
 #comment-form {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 }
 
-/* 댓글 입력창 */
 #comment-form textarea {
-    width: 100%;
-    min-height: 80px;
-    padding: 1rem;
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    font-size: 0.95rem;
-    resize: vertical;
-    background-color: #fff;
-    transition: border-color 0.3s, box-shadow 0.3s;
-    font-family: inherit;
+  width: 100%;
+  min-height: 80px;
+  padding: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  font-size: 0.95rem;
+  resize: vertical;
+  background-color: #fff;
+  transition: border-color 0.3s, box-shadow 0.3s;
 }
 
 #comment-form textarea:focus {
-    border-color: #aaa;
-    box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.05);
-    outline: none;
+  border-color: #aaa;
+  box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.05);
+  outline: none;
 }
 
-#comment-form textarea::placeholder {
-    color: #bbb;
-}
+#comment-form textarea::placeholder { color: #bbb; }
 
-/* 등록 버튼 */
 #comment-form button {
-    align-self: flex-end;
-    padding: 0.6rem 1.5rem;
-    background-color: #222;
-    color: #fff;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 0.9rem;
-    transition: background-color 0.3s ease;
+  align-self: flex-end;
+  padding: 0.6rem 1.5rem;
+  background-color: #222;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background-color 0.3s ease;
 }
 
-#comment-form button:hover {
-    background-color: #444;
-}
+#comment-form button:hover { background-color: #444; }
 
-/* 반응형 */
 @media (max-width: 480px) {
-    #comments {
-        padding: 0 12px;
-    }
-
-    .comment-item {
-        padding: 0.9rem;
-    }
-
-    #comment-form button {
-        width: 100%;
-    }
+  #comments { padding: 0 12px; }
+  .comment-item { padding: 0.9rem; }
+  #comment-form button { width: 100%; }
 }
-
-
-

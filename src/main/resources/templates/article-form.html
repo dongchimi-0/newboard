@@ -9,16 +9,19 @@
     <link rel="stylesheet" th:href="@{/css/style.css}" />
     <link rel="stylesheet" th:href="@{/css/styleDetail.css}" />
     <link rel="stylesheet" th:href="@{/css/toast.css}" />
-
 </head>
 
 <body>
 <div th:replace="header :: header"></div>
+
 <main class="form-main">
     <h1>새 글 작성</h1>
-    <form th:object="${articleCreateRequest}" method="post" action="/articles">
+
+    <!-- multipart 설정 -->
+    <form th:object="${articleCreateRequest}" method="post" action="/articles" enctype="multipart/form-data">
         <input type="hidden" id="article-id" th:value="${article} != null ? ${article.id} : ''"/>
 
+        <!-- 카테고리 -->
         <div>
             <label for="category">카테고리</label>
             <select id="category" name="category">
@@ -28,25 +31,35 @@
                 <option value="질문">질문</option>
                 <option value="일기">일기</option>
             </select>
-
         </div>
 
+        <!-- 제목 -->
         <div>
             <label>제목
                 <input type="text" id="title" name="title" required>
             </label>
         </div>
+
+        <!-- 이미지 업로드  -->
+        <div>
+            <label>이미지 업로드
+                <input type="file" id="file" name="file" accept="image/*">
+            </label>
+        </div>
+
+        <!-- 내용 -->
         <div>
             <label>내용
                 <textarea id="content" name="content" rows="8" required></textarea>
             </label>
         </div>
 
+        <!-- 저장 버튼 -->
         <button id="create-btn" type="button">저장</button>
-
         <a href="/articles">목록</a>
     </form>
 </main>
+
 <script src="/js/article.js" defer></script>
 <div th:replace="footer :: footer"></div>
 </body>

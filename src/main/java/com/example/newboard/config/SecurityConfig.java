@@ -1,6 +1,7 @@
 package com.example.newboard.config;
 
 import com.example.newboard.service.security.CustomOidcUserService;
+import com.example.newboard.service.security.CustomUserDetailsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,22 +13,24 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 
 @Configuration
-@EnableWebSecurity // ✅ SecurityConfig 강제 활성화
+@EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
 
     private final CustomOidcUserService customOidcUserService;
+    private final CustomUserDetailsService customUserDetailsService;
 
     @Bean
-    public PasswordEncoder passwordEncoder() { // ✅ public 으로 변경
+    public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http
+        return http
                 .authorizeHttpRequests(auth -> auth
-                        // 읽기는 허용
+                        .requestMatchers("/h2-console/**").permitAll()
+                        // 읽기 허용
                         .requestMatchers(org.springframework.http.HttpMethod.GET, "/api/articles/*").permitAll()
                         .requestMatchers(org.springframework.http.HttpMethod.GET, "/api/articles/*/comments").permitAll()
                         // 쓰기는 인증 필요
@@ -35,6 +38,8 @@ public class SecurityConfig {
                         .requestMatchers("/", "/articles", "/articles/**", "/login", "/join", "/css/**", "/js/**").permitAll()
                         .anyRequest().permitAll()
                 )
+                // ✅ H2 콘솔 iframe 허용
+                .headers(headers -> headers.frameOptions(frame -> frame.disable()))
 
                 .formLogin(form -> form
                         .loginPage("/login")
@@ -52,10 +57,12 @@ public class SecurityConfig {
                         .loginPage("/login")
                         .userInfoEndpoint(u -> u.oidcUserService(customOidcUserService))
                 )
+                // ✅ CSRF: h2-console + 프로필 이미지 업로드만 예외 처리
                 .csrf(csrf -> csrf
                         .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
-                );
-
-        return http.build();
+                        .ignoringRequestMatchers("/h2-console/**", "/api/users/profile-image")
+                )
+                .userDetailsService(customUserDetailsService)
+                .build();
     }
 }

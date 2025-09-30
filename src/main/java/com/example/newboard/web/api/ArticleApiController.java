@@ -4,17 +4,18 @@ package com.example.newboard.web.api;
 import com.example.newboard.domain.Article;
 import com.example.newboard.repository.UserRepository;
 import com.example.newboard.service.ArticleService;
-import com.example.newboard.web.dto.ArticleCreateRequest;
-import com.example.newboard.web.dto.ArticleUpdateRequest;
-import com.example.newboard.web.dto.ArticleViewDto;
+import com.example.newboard.web.dto.*;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import java.net.URI;
 
 @RestController
@@ -24,19 +25,22 @@ public class ArticleApiController {
 
     private final ArticleService articleService;
 
-    @PostMapping
-    public ResponseEntity<Article> create(@Valid @RequestBody ArticleCreateRequest req, Authentication auth) {
-        Long id = articleService.create(req, auth.getName());
+
+    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<Void> create(@Valid @ModelAttribute ArticleCreateForm form, Authentication auth) {
+        Long id = articleService.createWithImage(form, auth.getName());
         return ResponseEntity.created(URI.create("/articles/" + id)).build();
     }
 
-    @PutMapping("/{id}")
+    @PutMapping(value = "/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Void> update(@PathVariable Long id,
-                                       @Valid @RequestBody ArticleUpdateRequest req,
+                                       @Valid @ModelAttribute ArticleUpdateForm form,
                                        Authentication auth) {
-        articleService.update(id, auth.getName(), req);
+        articleService.updateWithImage(id, auth.getName(), form);
         return ResponseEntity.noContent().build();
     }
+
+
 
 
     @DeleteMapping("/{id}")

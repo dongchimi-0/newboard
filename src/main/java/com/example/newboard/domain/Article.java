@@ -29,66 +29,64 @@ public class Article {
     @Column(length = 50)
     private String category;
 
-    public void update(String title, String content, String category) {
+    // ✅ 새로 추가: 이미지 URL 저장
+    @Column(name = "image_url")
+    private String imageUrl;
+
+    // 게시글 수정 (이미지까지 반영하도록 수정)
+    public void update(String title, String content, String category, String imageUrl) {
         this.title = title;
         this.content = content;
         this.category = category;
+        if (imageUrl != null) {  // 새 이미지가 업로드된 경우에만 변경
+            this.imageUrl = imageUrl;
+        }
     }
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "author_id", nullable = false)
-    private User author;  // User 테이블의 id 와 연결되는 외래키 컬럼
+    private User author;
 
-
-    // ✅ 작성일 추가
     @Column(name = "created_at", nullable = false, updatable = false)
-    private LocalDateTime createdAt;  // 필드 이름만 변경 (camelCase)
+    private LocalDateTime createdAt;
 
     @PrePersist
     protected void onCreate() {
         this.createdAt = LocalDateTime.now();
     }
 
-    // 게시글 ↔ 댓글 : 1:N 관계 (양방향)
     @OneToMany(mappedBy = "article", cascade = CascadeType.ALL, orphanRemoval = true)
-    @Builder.Default   // 빌더 사용시에도 초기화 보장
+    @Builder.Default
     private List<Comment> comments = new ArrayList<>();
 
-    // 양방향 연관관계 편의 메서드(댓글 추가 편의 메서드)
     public void addComment(Comment comment) {
         comments.add(comment);
-        comment.setArticle(this);  // 양방향 일관성 유지
+        comment.setArticle(this);
     }
 
-    // 댓글 삭제 편의 메서드
     public void removeComment(Comment comment) {
         comments.remove(comment);
         comment.setArticle(null);
     }
 
-    // ✅ 조회수
     @Column(nullable = false)
     @org.hibernate.annotations.ColumnDefault("0")
     @Builder.Default
     private int views = 0;
 
-    // 조회수 증가
     public void incrementViews() {
         this.views += 1;
     }
 
-
-    // ✅ 좋아요 누른 사용자
     @ManyToMany
     @JoinTable(
-            name = "article_likes",
+            name = "article_likes",   // 소문자로 고정
             joinColumns = @JoinColumn(name = "article_id"),
             inverseJoinColumns = @JoinColumn(name = "user_id")
     )
     @Builder.Default
     private Set<User> likedUsers = new HashSet<>();
 
-    // 좋아요 토글
     public void toggleLike(User user) {
         if (likedUsers.contains(user)) {
             likedUsers.remove(user);
@@ -97,10 +95,7 @@ public class Article {
         }
     }
 
-    // 좋아요 수 반환
     public int getLikeCount() {
         return likedUsers != null ? likedUsers.size() : 0;
     }
-
-
 }

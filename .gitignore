@@ -38,3 +38,6 @@ out/
 
 src/main/resources/application-local.yml
 .env
+
+### 개인 프로필 이미지 ###
+uploads/

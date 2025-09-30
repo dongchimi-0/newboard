@@ -3,20 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
+
     <title>홈</title>
-    <link rel="stylesheet" th:href="@{/css/style.css}" />
-    <link rel="stylesheet" th:href="@{/css/styleDetail.css}" />
+
+    <meta name="_csrf" th:content="${_csrf.token}">
+    <meta name="_csrf_header" th:content="${_csrf.headerName}">
+
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/styleDetail.css}">
 </head>
 <body class="home">
 <div th:replace="header :: header"></div>
+
 <main class="home-main">
     <section>
         <h1>최신 게시글</h1>
 
         <div style="margin-bottom: 20px;">
             <a href="/articles">전체 글 보기</a>
-
         </div>
 
         <!-- 공지사항 박스 -->
@@ -48,15 +53,16 @@
 
     <aside>
         <h3>내 정보</h3>
-        <div class="user-info" sec:authorize="isAuthenticated()">
-            <img th:src="@{'/images/' + ${profileImage}}" alt="프로필 이미지">
-            <div class = "user-hi">
-                안녕하세요, <strong th:text="${displayName}"></strong>님!
-            </div>
-            <form method="post" action="/logout">
-                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
-                <button type="submit">로그아웃</button>
-            </form>
+
+        <div class="profile-section" sec:authorize="isAuthenticated()">
+            <img id="profile-image"
+                 class="avatar"
+                 th:src="${#authentication.principal.profileImageUrl ?: '/images/profiles/default-profile.jpg'}"
+                 alt="프로필">
+
+            <input type="file" id="profile-upload" hidden accept="image/*">
+
+            <button id="change-profile-btn" class="btn-sm">프로필 변경</button>
         </div>
 
         <div sec:authorize="isAnonymous()">
@@ -68,10 +74,12 @@
             <li><a href="/articles?category=notice">공지사항</a></li>
             <li><a href="/articles?category=free">자유게시판</a></li>
             <li><a href="/articles?category=question">질문게시판</a></li>
-            <li><a href="/articles?category=study">일기게시판</a></li>
+            <li><a href="/articles?category=diary">일기게시판</a></li>
         </ul>
     </aside>
 </main>
+
 <div th:replace="footer :: footer"></div>
+<script th:src="@{/js/home.js}"></script>
 </body>
 </html>

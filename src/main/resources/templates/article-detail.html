@@ -34,6 +34,11 @@
         <!-- 게시글 ID (hidden input) -->
         <input type="hidden" id="article-id" th:value="${article.id}">
 
+        <!-- 이미지 표시 (있을 때만 보이도록) -->
+        <div class="article-image" th:if="${article.imageUrl != null}">
+            <img th:src="@{${article.imageUrl}}" alt="게시글 이미지">
+        </div>
+
         <!-- 게시글 내용 -->
         <div th:text="${article.content}">내용</div>
 
@@ -55,8 +60,6 @@
             </div>
         </div>
     </div>
-
-
 
     <!-- 수정,삭제(작성자만 보임)/목록 버튼 -->
     <div class="article-buttons">

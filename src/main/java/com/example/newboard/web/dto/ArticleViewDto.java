@@ -16,4 +16,5 @@ public class ArticleViewDto {
     private LocalDateTime createdAt;
     private int views;
     private int likeCount;
+    private String imageUrl;
 }

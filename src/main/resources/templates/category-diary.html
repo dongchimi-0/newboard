@@ -3,7 +3,7 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
-    <title>공지 게시글</title>
+    <title>diary 게시글</title>
     <link rel="stylesheet" th:href="@{/css/style.css}"> <!-- 스타일 공통화 가능하면 CSS 분리 -->
     <link rel="stylesheet" th:href="@{/css/styleDetail.css}" />
 
@@ -37,7 +37,6 @@
             <a th:href="@{'/articles/' + ${a.id}}" th:text="${a.title}">제목</a>
             <div>
                 작성일 : <span th:text="${#temporals.format(a.createdAt, 'yyyy-MM-dd HH:mm')}"></span>
-                </span>
             </div>
         </li>
     </ul>

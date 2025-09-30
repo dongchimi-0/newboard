@@ -13,8 +13,11 @@
 <body>
 <div th:replace="header :: header"></div>
 <main class="edit-main"><h1>글 수정</h1>
-    <form th:action="@{'/articles/' + ${article.id} + '/edit'}" method="post" novalidate>
-        <input type="hidden" id="article-id" th:value="${article} != null ? ${article.id} : ''"/>
+
+    <!-- multipart 설정 -->
+    <form th:action="@{'/articles/' + ${article.id} + '/edit'}" method="post" enctype="multipart/form-data" novalidate>
+
+    <input type="hidden" id="article-id" th:value="${article} != null ? ${article.id} : ''"/>
 
         <div>
             <label>카테고리
@@ -32,6 +35,12 @@
         <div>
             <label>제목
                 <input type="text" id="title" name="title" th:value="${article.title}" required>
+            </label>
+        </div>
+
+        <div>
+            <label>이미지 업로드
+                <input type="file" id="file" name="file" accept="image/*">
             </label>
         </div>
 

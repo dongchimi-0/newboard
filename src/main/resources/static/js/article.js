@@ -16,6 +16,19 @@ function showToast(message, type = "success") {
   setTimeout(() => toast.remove(), 3500);
 }
 
+// ===== 게시글 이미지 미리보기 ====
+document.getElementById('file')?.addEventListener('change', (e) => {
+  const file = e.target.files[0];
+  if (!file) return;
+
+  const reader = new FileReader();
+  reader.onload = (event) => {
+    const preview = document.getElementById('image-preview');
+    if (preview) preview.src = event.target.result;
+  };
+  reader.readAsDataURL(file);
+});
+
 // ========== 게시글 생성 ==========
 const createButton = document.getElementById('create-btn');
 if (createButton) {
@@ -25,22 +38,24 @@ if (createButton) {
     const title = document.getElementById('title').value.trim();
     const content = document.getElementById('content').value.trim();
     const category = document.getElementById('category').value.trim();
+    const file = document.getElementById('file')?.files[0];
 
     if (!title) return showToast("제목을 입력하세요.", "error");
     if (!content) return showToast("내용을 입력하세요.", "error");
     if (!category) return showToast("카테고리를 선택하세요.", "error");
 
-    const body = { title, content, category };
     const { header, token } = csrf();
+    const formData = new FormData();
+    formData.append("title", title);
+    formData.append("content", content);
+    formData.append("category", category);
+    if (file) formData.append("file", file);
 
     try {
       const res = await fetch('/api/articles', {
         method: 'POST',
-        headers: {
-          "Content-Type": "application/json",
-          ...(token ? { [header]: token } : {})
-        },
-        body: JSON.stringify(body),
+        headers: token ? { [header]: token } : undefined,
+        body: formData,
         credentials: 'same-origin'
       });
 
@@ -63,6 +78,54 @@ if (createButton) {
 
     } catch (error) {
       console.error("게시글 등록 중 오류:", error);
+      showToast("서버와 통신 중 문제가 발생했습니다.", "error");
+    }
+  });
+}
+
+// ========== 게시글 수정 ==========
+const modifyButton = document.getElementById('modify-btn');
+if (modifyButton) {
+  modifyButton.addEventListener('click', async (event) => {
+    event.preventDefault();
+    const id = document.getElementById('article-id')?.value;
+    if (!id) return showToast('id가 없습니다.', "error");
+
+    const title = document.getElementById('title').value.trim();
+    const content = document.getElementById('content').value.trim();
+    const category = document.getElementById('category').value.trim();
+    const file = document.getElementById('file')?.files[0];
+
+    if (!title) return showToast("제목을 입력하세요.", "error");
+    if (!content) return showToast("내용을 입력하세요.", "error");
+    if (!category) return showToast("카테고리를 선택하세요.", "error");
+
+    const { header, token } = csrf();
+
+    const formData = new FormData();
+    formData.append("title", title);
+    formData.append("content", content);
+    formData.append("category", category);
+    if (file) formData.append("file", file);
+
+    try {
+      const res = await fetch(`/api/articles/${id}`, {
+        method: 'PUT',
+        headers: token ? { [header]: token } : undefined,
+        body: formData,
+        credentials: 'same-origin'
+      });
+
+      if (res.status === 401 || res.status === 403) {
+        return showToast('수정 권한이 없습니다.', "error");
+      }
+      if (!res.ok) return showToast('수정 실패: ' + res.status, "error");
+
+      showToast('수정이 완료되었습니다.');
+      setTimeout(() => location.replace(`/articles/${id}`), 2500);
+
+    } catch (error) {
+      console.error("게시글 수정 중 오류:", error);
       showToast("서버와 통신 중 문제가 발생했습니다.", "error");
     }
   });
@@ -95,51 +158,6 @@ if (deleteButton) {
 
     } catch (error) {
       console.error("게시글 삭제 중 오류:", error);
-      showToast("서버와 통신 중 문제가 발생했습니다.", "error");
-    }
-  });
-}
-
-// ========== 게시글 수정 ==========
-const modifyButton = document.getElementById('modify-btn');
-if (modifyButton) {
-  modifyButton.addEventListener('click', async (event) => {
-    event.preventDefault();
-    const id = document.getElementById('article-id')?.value;
-    if (!id) return showToast('id가 없습니다.', "error");
-
-    const body = {
-      title: document.getElementById('title').value.trim(),
-      content: document.getElementById('content').value.trim(),
-      category: document.getElementById('category').value.trim()
-    };
-    if (!body.title) return showToast("제목을 입력하세요.", "error");
-    if (!body.content) return showToast("내용을 입력하세요.", "error");
-    if (!body.category) return showToast("카테고리를 선택하세요.", "error");
-
-    const { header, token } = csrf();
-
-    try {
-      const res = await fetch(`/api/articles/${id}`, {
-        method: 'PUT',
-        headers: {
-          "Content-Type": "application/json",
-          ...(token ? { [header]: token } : {})
-        },
-        body: JSON.stringify(body),
-        credentials: 'same-origin'
-      });
-
-      if (res.status === 401 || res.status === 403) {
-        return showToast('수정 권한이 없습니다.', "error");
-      }
-      if (!res.ok) return showToast('수정 실패: ' + res.status, "error");
-
-      showToast('수정이 완료되었습니다.');
-      setTimeout(() => location.replace(`/articles/${id}`), 2500);
-
-    } catch (error) {
-      console.error("게시글 수정 중 오류:", error);
       showToast("서버와 통신 중 문제가 발생했습니다.", "error");
     }
   });

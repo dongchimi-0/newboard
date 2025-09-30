@@ -8,7 +8,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import java.time.LocalDateTime;
 
 @Entity @Table(name="users", uniqueConstraints=@UniqueConstraint(columnNames="email"))
-@Getter @NoArgsConstructor @AllArgsConstructor @Builder
+@Getter @Setter @NoArgsConstructor @AllArgsConstructor @Builder
 @EntityListeners(AuditingEntityListener.class)
 public class User {
     @Id
@@ -26,6 +26,9 @@ public class User {
 
     @Column(nullable = false, length = 20)
     private String role;
+
+    @Column(name = "profile_image_url")
+    private String profileImageUrl;
 
     private User(String email, String name) {
         this.email = email;

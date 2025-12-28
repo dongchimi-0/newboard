@@ -222,16 +222,19 @@ document.addEventListener('DOMContentLoaded', () => {
     comments.forEach(c => {
       const li = document.createElement('li');
       li.classList.add('comment-item');
+
       li.innerHTML = `
         <div class="comment-meta">
           <span><b>${c.authorName}</b></span>
           <span>${new Date(c.createdAt).toLocaleString()}</span>
         </div>
         <div class="comment-content">${c.content}</div>
-        <button data-comment-id="${c.id}" class="delete-comment-btn">삭제</button>
+        ${c.mine ? `<button data-comment-id="${c.id}" class="delete-comment-btn">삭제</button>` : ''}
       `;
+
       list.appendChild(li);
     });
+
 
     document.querySelectorAll('.delete-comment-btn').forEach(btn => {
       btn.addEventListener('click', async (e) => {

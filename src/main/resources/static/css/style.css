@@ -178,4 +178,21 @@ main {
   .header .header-menu li a {
     font-size: 14px;
   }
+
+  .btn-logout {
+    background: none;
+    border: none;
+    padding: 4px 8px;
+    font-size: 14px;
+    color: #999;
+    cursor: pointer;
+    transition: color 0.2s ease;
+  }
+
+  .btn-logout:hover {
+    color: #333;
+    text-decoration: underline;
+  }
+
+
 }

@@ -7,6 +7,7 @@ import com.example.newboard.repository.ArticleRepository;
 import com.example.newboard.repository.CommentRepository;
 import com.example.newboard.repository.UserRepository;
 
+import com.example.newboard.web.dto.CommentResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -23,6 +24,29 @@ public class CommentService {
     private final ArticleRepository articleRepository;
     private final CommentRepository commentRepository;
     private final UserRepository userRepository;
+
+    @Transactional(readOnly = true)
+    public List<CommentResponse> getCommentResponses(Long articleId) {
+        Long currentUserId = getCurrentUserId();
+
+        return commentRepository.findByArticleId(articleId).stream()
+                .map(comment -> CommentResponse.from(comment, currentUserId))
+                .toList();
+    }
+
+    @Transactional(readOnly = true)
+    public Long getCurrentUserId() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+        if (auth == null || !auth.isAuthenticated()
+                || auth.getPrincipal().equals("anonymousUser")) {
+            return null;
+        }
+
+        return userRepository.findByEmail(auth.getName())
+                .map(User::getId)
+                .orElse(null);
+    }
 
     // 댓글 등록
     public Comment addComment(Long articleId, String content) {

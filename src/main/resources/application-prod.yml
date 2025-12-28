@@ -1,29 +1,18 @@
 spring:
   datasource:
-    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://${DB_HOST}:${DB_PORT}/${DB_NAME}}
-    username: ${SPRING_DATASOURCE_USERNAME:${DB_USER}}
-    password: ${SPRING_DATASOURCE_PASSWORD:${DB_PASSWORD}}
+    url: ${DATABASE_URL}
     driver-class-name: org.postgresql.Driver
-
-    hikari:
-      maximum-pool-size: 10
-      minimum-idle: 2
-      connection-timeout: 30000
 
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     hibernate:
-      ddl-auto: update
+      ddl-auto: none
+    open-in-view: false
     show-sql: false
-    properties:
-      hibernate:
-        jdbc:
-          lob:
-            non_contextual_creation: true
 
   sql:
     init:
-      mode: never          # ⭐ 운영에서는 data.sql 실행 안 함
+      mode: never
 
   security:
     oauth2:
@@ -33,3 +22,6 @@ spring:
             client-id: ${GOOGLE_CLIENT_ID}
             client-secret: ${GOOGLE_CLIENT_SECRET}
             scope: openid, profile, email
+
+server:
+  port: ${PORT:8080}

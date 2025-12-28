@@ -1,6 +1,6 @@
 spring:
   profiles:
-    active: local   # 기본 실행은 local
+    active: prod   # 기본 실행은 local
 
   thymeleaf:
     cache: false
@@ -23,7 +23,7 @@ spring:
     time-zone: Asia/Seoul
 
 server:
-  port: ${PORT:8080}
+  port: ${PORT:8081}
 
 logging:
   level:
